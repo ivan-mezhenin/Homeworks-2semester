@@ -1,16 +1,16 @@
 namespace BWT;
 
 /// <summary>
-/// main class.
+/// BWT realization.
 /// </summary>
 public static class WordTransform
 {
     /// <summary>
-    /// dfdf.
+    /// word transform.
     /// </summary>
-    /// <param name="word">fdfdf.</param>
-    /// <returns>fdffd.</returns>
-    public static (string transformString, int position) Transform(string word)
+    /// <param name="word">word, which will be transformed.</param>
+    /// <returns>transformed word and position.</returns>
+    public static (string transformWord, int position) Transform(string word)
     {
         string[] shifts = new string[word.Length];
         var currentString = word;
@@ -23,58 +23,64 @@ public static class WordTransform
 
         Array.Sort(shifts);
 
-        var transformString = string.Join(string.Empty, shifts.Select(x => x[^1]));
+        var transformWord = string.Join(string.Empty, shifts.Select(x => x[^1]));
         var position = Array.IndexOf(shifts, word) + 1;
 
-        return (transformString, position);
+        return (transformWord, position);
     }
 
     /// <summary>
-    /// fdfdf.
+    /// reverse word transform.
     /// </summary>
-    /// <param name="word">dfdffd.</param>
-    /// <param name="position">dfdfdf.</param>
-    /// <returns>dfdfddf.</returns>
+    /// <param name="word">transformed word.</param>
+    /// <param name="position">original word index.</param>
+    /// <returns>original word.</returns>
     public static string ReverseTransform(string word, int position)
     {
-        int[] count = new int[25600];
+        int wordLength = word.Length;
+        Dictionary<char, int> charsCounter = new ();
+        Dictionary<char, int> startPositions = new ();
+        int[] next = new int[wordLength];
+        int summary = 0;
 
-        for (var i = 0; i < 25600; ++i)
+        position--;
+
+        foreach (char symbol in word)
+         {
+            if (!charsCounter.TryGetValue(symbol, out int value))
+            {
+                value = 0;
+                charsCounter.Add(symbol, value);
+            }
+
+            value++;
+            charsCounter[symbol] = value;
+         }
+
+        var sortedChars = charsCounter.Keys.ToArray();
+        Array.Sort(sortedChars);
+
+        foreach (char symbol in sortedChars)
         {
-            count[i] = 0;
+            startPositions[symbol] = summary;
+            summary += charsCounter[symbol];
         }
 
-        for (var i = 0; i < word.Length; ++i)
+        for (var i = 0; i < wordLength; ++i)
         {
-            ++count[word[i]];
+            var currentSymbol = word[i];
+            next[startPositions[currentSymbol]] = i;
+            startPositions[currentSymbol]++;
         }
 
-        int sum = 0;
-
-        for (var i = 0; i < 25600; ++i)
+        char[] originalWord = new char[wordLength];
+        int current = position;
+        for (var i = 0; i < wordLength; ++i)
         {
-            sum += count[i];
-            count[i] = sum - count[i];
+            originalWord[i] = word[next[current]];
+            current = next[current];
         }
 
-        int[] t = new int[word.Length];
-
-        for (var i = 0; i < word.Length; ++i)
-        {
-            t[count[word[i]]] = i;
-            count[word[i]]++;
-        }
-
-        int j = t[position - 1];
-
-        char[] answer = new char[word.Length];
-
-        for (var i = 0; i < word.Length; ++i)
-        {
-            answer[i] = word[j];
-            j = t[j];
-        }
-
-        return string.Join(string.Empty, answer);
+        return string.Join(string.Empty, originalWord);
     }
 }
