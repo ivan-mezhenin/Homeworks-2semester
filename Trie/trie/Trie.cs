@@ -1,8 +1,5 @@
 namespace Trie;
 
-using System.ComponentModel;
-using System.Linq.Expressions;
-
 /// <summary>
 /// realization of Bor.
 /// </summary>
@@ -30,6 +27,7 @@ public class Bor
             }
 
             currentNode = value;
+            currentNode.TerminalCounter++;
         }
 
         if (currentNode.IsTerminal)
@@ -99,17 +97,37 @@ public class Bor
             var (currentParentNode, currentSymbol) = wayToElement.Pop();
             var nodeToDelete = currentParentNode.Children[currentSymbol];
 
+            nodeToDelete.TerminalCounter--;
+
             if (!nodeToDelete.IsTerminal && nodeToDelete.Children.Count == 0)
             {
                 currentParentNode.Children.Remove(currentSymbol);
             }
-            else
-            {
-                break;
-            }
         }
 
         return true;
+    }
+
+    public int HowManyStartsWithPrefix(string prefix)
+    {
+        if (string.IsNullOrEmpty(prefix))
+        {
+            return this.Size;
+        }
+
+        var currentNode = this.root;
+
+        foreach (var symbol in prefix)
+        {
+            if (!currentNode.Children.TryGetValue(symbol, out var value))
+            {
+                return 0;
+            }
+
+            currentNode = value;
+        }
+
+        return currentNode.TerminalCounter;
     }
 
     private class TrieNode
@@ -117,5 +135,7 @@ public class Bor
         public Dictionary<char, TrieNode> Children { get; set; } = new ();
 
         public bool IsTerminal { get; set; }
+
+        public int TerminalCounter { get; set; }
     }
 }
