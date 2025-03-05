@@ -1,5 +1,6 @@
 namespace Trie;
 
+using System.ComponentModel;
 using System.Linq.Expressions;
 
 /// <summary>
@@ -7,7 +8,7 @@ using System.Linq.Expressions;
 /// </summary>
 public class Bor
 {
-    private TrieNode root = new ();
+    private readonly TrieNode root = new ();
 
     public int Size { get; private set; }
 
@@ -22,12 +23,13 @@ public class Bor
 
         foreach (char symbol in element)
         {
-            if (!currentNode.Children.ContainsKey(symbol))
+            if (!currentNode.Children.TryGetValue(symbol, out TrieNode? value))
             {
-                currentNode.Children[symbol] = new TrieNode();
+                value = new TrieNode();
+                currentNode.Children[symbol] = value;
             }
 
-            currentNode = currentNode.Children[symbol];
+            currentNode = value;
         }
 
         if (currentNode.IsTerminal)
@@ -41,9 +43,32 @@ public class Bor
         return false;
     }
 
+    public bool Contains(string element)
+    {
+        if (string.IsNullOrEmpty(element))
+        {
+            return false;
+        }
+
+        var currentNode = this.root;
+
+        foreach (char symbol in element)
+        {
+            if (!currentNode.Children.TryGetValue(symbol, out TrieNode? value))
+            {
+                return false;
+            }
+
+            currentNode = value;
+        }
+
+        return currentNode.IsTerminal;
+    }
+
     private class TrieNode
     {
-        public Dictionary<char, TrieNode> Children = new ();
-        public bool IsTerminal;
+        public Dictionary<char, TrieNode> Children { get; set; } = new ();
+
+        public bool IsTerminal { get; set; }
     }
 }
