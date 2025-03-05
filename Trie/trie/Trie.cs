@@ -23,7 +23,7 @@ public class Bor
 
         foreach (char symbol in element)
         {
-            if (!currentNode.Children.TryGetValue(symbol, out TrieNode? value))
+            if (!currentNode.Children.TryGetValue(symbol, out var value))
             {
                 value = new TrieNode();
                 currentNode.Children[symbol] = value;
@@ -54,7 +54,7 @@ public class Bor
 
         foreach (char symbol in element)
         {
-            if (!currentNode.Children.TryGetValue(symbol, out TrieNode? value))
+            if (!currentNode.Children.TryGetValue(symbol, out var value))
             {
                 return false;
             }
@@ -63,6 +63,53 @@ public class Bor
         }
 
         return currentNode.IsTerminal;
+    }
+
+    public bool Remove(string element)
+    {
+        if (string.IsNullOrEmpty(element))
+        {
+            return false;
+        }
+
+        var currentNode = this.root;
+        Stack<(TrieNode, char)> wayToElement = new ();
+
+        foreach (var symbol in element)
+        {
+            if (!currentNode.Children.TryGetValue(symbol, out var value))
+            {
+                return false;
+            }
+
+            wayToElement.Push((currentNode, symbol));
+            currentNode = value;
+        }
+
+        if (!currentNode.IsTerminal)
+        {
+            return false;
+        }
+
+        currentNode.IsTerminal = false;
+        --this.Size;
+
+        while (wayToElement.Count > 0)
+        {
+            var (currentParentNode, currentSymbol) = wayToElement.Pop();
+            var nodeToDelete = currentParentNode.Children[currentSymbol];
+
+            if (!nodeToDelete.IsTerminal && nodeToDelete.Children.Count == 0)
+            {
+                currentParentNode.Children.Remove(currentSymbol);
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return true;
     }
 
     private class TrieNode
