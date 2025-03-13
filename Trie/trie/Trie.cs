@@ -7,8 +7,16 @@ public class Bor
 {
     private readonly TrieNode root = new ();
 
+    /// <summary>
+    /// Gets amount of added words in Trie.
+    /// </summary>
     public int Size { get; private set; }
 
+    /// <summary>
+    /// add new word in Trie.
+    /// </summary>
+    /// <param name="element">element to add.</param>
+    /// <returns>false if word already added.</returns>
     public bool Add(string element)
     {
         if (string.IsNullOrEmpty(element))
@@ -32,15 +40,20 @@ public class Bor
 
         if (currentNode.IsTerminal)
         {
-            return true;
+            return false;
         }
 
         currentNode.IsTerminal = true;
         this.Size++;
 
-        return false;
+        return true;
     }
 
+    /// <summary>
+    /// check is trie contains element.
+    /// </summary>
+    /// <param name="element">element to check.</param>
+    /// <returns>true if trie contains element.</returns>
     public bool Contains(string element)
     {
         if (string.IsNullOrEmpty(element))
@@ -63,6 +76,11 @@ public class Bor
         return currentNode.IsTerminal;
     }
 
+    /// <summary>
+    /// remove element from trie.
+    /// </summary>
+    /// <param name="element">element to remove.</param>
+    /// <returns>true if element was in trie.</returns>
     public bool Remove(string element)
     {
         if (string.IsNullOrEmpty(element))
@@ -108,6 +126,11 @@ public class Bor
         return true;
     }
 
+    /// <summary>
+    /// returns how many words in trie stars with prefix.
+    /// </summary>
+    /// <param name="prefix">prefix to check.</param>
+    /// <returns>amount of words start with prefix.</returns>
     public int HowManyStartsWithPrefix(string prefix)
     {
         if (string.IsNullOrEmpty(prefix))
