@@ -1,16 +1,19 @@
 namespace LZW;
 
 /// <summary>
-/// encode file.
+/// to encode file.
 /// </summary>
 public class LZWEncode
 {
-    public static void Encode(string file)
+    /// <summary>
+    /// to compress file.
+    /// </summary>
+    /// <param name="file">file path.</param>
+    /// <returns>int array of codes.</returns>
+    public static int[] Compress(string file)
     {
         Trie trie = Trie.Initialization();
         byte[] fileContent = File.ReadAllBytes(file);
-        int len1 = fileContent.Length;
-        int len2;
         int counter = trie.Size;
 
         List<byte> currentString = [fileContent[0]];
@@ -32,14 +35,40 @@ public class LZWEncode
                 trie.Add(combined, counter);
                 ++counter;
 
-                currentString = new List<byte> { nextByte };
+                currentString = [nextByte];
             }
         }
 
         encodedString.Add(trie.Contains(currentString));
 
-        len2 = encodedString.Count;
-        Console.WriteLine($"{len1} {len2} {(float)len1 / len2}");
+        return encodedString.ToArray();
+    }
 
+    /// <summary>
+    /// transform int array to byte array.
+    /// </summary>
+    /// <param name="encodedString">string to transform.</param>
+    /// <returns>byte array.</returns>
+    public static byte[] TransformIntArrayToByteArray(int[] encodedString)
+    {
+        List<byte> result = [];
+
+        foreach (var symbol in encodedString)
+        {
+            int value = symbol;
+            while (value != 0)
+            {
+                byte byteValue = (byte)(value & 127);
+                value >>= 7;
+                if (value != 0)
+                {
+                    byteValue |= 128;
+                }
+
+                result.Add(byteValue);
+            }
+        }
+
+        return result.ToArray();
     }
 }
