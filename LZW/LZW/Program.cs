@@ -1,3 +1,4 @@
 ﻿using LZW;
 
-Console.WriteLine("LZW");
+LZW.LZWEncode.Compress("test.txt");
+LZW.LZWDecode.Decompress("test.txt.zipped");

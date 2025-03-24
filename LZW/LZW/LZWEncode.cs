@@ -8,38 +8,58 @@ public class LZWEncode
     /// <summary>
     /// to compress file.
     /// </summary>
-    /// <param name="file">file path.</param>
+    /// <param name="filePath">file to compress.</param>
+    public static void Compress(string filePath)
+    {
+        byte[] data = File.ReadAllBytes(filePath);
+        int fileLength = data.Length;
+
+        int[] codes = Encode(data);
+
+        byte[] compressedData = TransformIntArrayToByteSequence(codes);
+        int compressedFileLength = compressedData.Length;
+
+        string compressedFilePath = filePath + ".zipped";
+        File.WriteAllBytes(compressedFilePath, compressedData);
+
+        float compressionRatio = (float)compressedFileLength / fileLength;
+        Console.WriteLine($"The compression ratio is {compressionRatio}");
+    }
+
+    /// <summary>
+    /// to encode file.
+    /// </summary>
+    /// <param name="data">file to encode.</param>
     /// <returns>int array of codes.</returns>
-    public static int[] Compress(string file)
+    private static int[] Encode(byte[] data)
     {
         Trie trie = Trie.Initialization();
-        byte[] fileContent = File.ReadAllBytes(file);
         int counter = trie.Size;
 
-        List<byte> currentString = [fileContent[0]];
+        List<byte> currentByteSequence = [data[0]];
         List<int> encodedString = [];
 
-        for (var i = 1; i < fileContent.Length; ++i)
+        for (var i = 1; i < data.Length; ++i)
         {
-            byte nextByte = fileContent[i];
-            List<byte> combined = [.. currentString, nextByte];
+            byte nextByte = data[i];
+            List<byte> combined = [.. currentByteSequence, nextByte];
 
             if (trie.Contains(combined) != -1)
             {
-                currentString = combined;
+                currentByteSequence = combined;
             }
             else
             {
-                encodedString.Add(trie.Contains(currentString));
+                encodedString.Add(trie.Contains(currentByteSequence));
 
                 trie.Add(combined, counter);
                 ++counter;
 
-                currentString = [nextByte];
+                currentByteSequence = [nextByte];
             }
         }
 
-        encodedString.Add(trie.Contains(currentString));
+        encodedString.Add(trie.Contains(currentByteSequence));
 
         return encodedString.ToArray();
     }
@@ -49,13 +69,13 @@ public class LZWEncode
     /// </summary>
     /// <param name="encodedString">string to transform.</param>
     /// <returns>byte array.</returns>
-    public static byte[] TransformIntArrayToByteArray(int[] encodedString)
+    private static byte[] TransformIntArrayToByteSequence(int[] encodedString)
     {
         List<byte> result = [];
 
         foreach (var symbol in encodedString)
         {
-            int value = symbol;
+            long value = symbol;
             while (value != 0)
             {
                 byte byteValue = (byte)(value & 127);

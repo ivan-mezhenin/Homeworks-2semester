@@ -52,7 +52,6 @@ public class Trie
             }
 
             currentNode = value;
-            currentNode.TerminalCounter++;
         }
 
         if (currentNode.IsTerminal)
@@ -93,84 +92,7 @@ public class Trie
             currentNode = value;
         }
 
-        return currentNode.Code;
-    }
-
-    /// <summary>
-    /// remove element from trie.
-    /// </summary>
-    /// <param name="element">element to remove.</param>
-    /// <returns>true if element was in trie.</returns>
-    public bool Remove(List<byte> element)
-    {
-        if (element.Count == 0)
-        {
-            return false;
-        }
-
-        var currentNode = this.root;
-        Stack<(TrieNode, byte)> wayToElement = new();
-
-        foreach (var symbol in element)
-        {
-            if (!currentNode.Children.TryGetValue(symbol, out var value))
-            {
-                return false;
-            }
-
-            wayToElement.Push((currentNode, symbol));
-            currentNode = value;
-        }
-
-        if (!currentNode.IsTerminal)
-        {
-            return false;
-        }
-
-        currentNode.IsTerminal = false;
-        --this.Size;
-
-        while (wayToElement.Count > 0)
-        {
-            var (currentParentNode, currentSymbol) = wayToElement.Pop();
-            var nodeToDelete = currentParentNode.Children[currentSymbol];
-
-            nodeToDelete.TerminalCounter--;
-
-            if (!nodeToDelete.IsTerminal && nodeToDelete.Children.Count == 0)
-            {
-                currentParentNode.Children.Remove(currentSymbol);
-            }
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// returns how many words in trie stars with prefix.
-    /// </summary>
-    /// <param name="prefix">prefix to check.</param>
-    /// <returns>amount of words start with prefix.</returns>
-    public int HowManyStartsWithPrefix(List<byte> prefix)
-    {
-        if (prefix.Count == 0)
-        {
-            return this.Size;
-        }
-
-        var currentNode = this.root;
-
-        foreach (var symbol in prefix)
-        {
-            if (!currentNode.Children.TryGetValue(symbol, out var value))
-            {
-                return 0;
-            }
-
-            currentNode = value;
-        }
-
-        return currentNode.TerminalCounter;
+        return currentNode.IsTerminal ? currentNode.Code : -1;
     }
 
     private class TrieNode
@@ -178,8 +100,6 @@ public class Trie
         public Dictionary<byte, TrieNode> Children { get; set; } = new();
 
         public bool IsTerminal { get; set; }
-
-        public int TerminalCounter { get; set; }
 
         public int Code { get; set; } = -1;
     }
