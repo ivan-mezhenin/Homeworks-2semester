@@ -24,7 +24,7 @@ public class LZWDecode
     /// </summary>
     /// <param name="encodedData">data to encode.</param>
     /// <returns>sourseByteSequence.</returns>
-    private static byte[] Decode(int[] encodedData)
+    public static byte[] Decode(int[] encodedData)
     {
         Dictionary<int, List<byte>> codes = new();
         List<byte> output = new();
@@ -69,7 +69,7 @@ public class LZWDecode
     /// </summary>
     /// <param name="byteSequence">byte sequence to transform.</param>
     /// <returns>int array of codes.</returns>
-    private static int[] TransformByteSequenceToIntArray(byte[] byteSequence)
+    public static int[] TransformByteSequenceToIntArray(byte[] byteSequence)
     {
         List<int> result = new();
         int number = 0;
