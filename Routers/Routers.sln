@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Routers", "Routers\Routers.csproj", "{E588B37B-DC61-4C66-8090-5948596EE1D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Routers", "Routers\Routers.csproj", "{8D540053-1A4F-43A7-9888-D3E00203C4BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E588B37B-DC61-4C66-8090-5948596EE1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E588B37B-DC61-4C66-8090-5948596EE1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E588B37B-DC61-4C66-8090-5948596EE1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E588B37B-DC61-4C66-8090-5948596EE1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D540053-1A4F-43A7-9888-D3E00203C4BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D540053-1A4F-43A7-9888-D3E00203C4BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D540053-1A4F-43A7-9888-D3E00203C4BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D540053-1A4F-43A7-9888-D3E00203C4BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
