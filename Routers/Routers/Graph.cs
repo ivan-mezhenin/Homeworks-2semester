@@ -20,7 +20,7 @@ public class Graph
     /// <summary>
     /// gets the adjacency list.
     /// </summary>
-    public Dictionary<int, List<(int, int)>> Edges { get; }
+    public Dictionary<int, List<(int Neighbour, int ThroughputСapacity)>> Edges { get; }
 
     /// <summary>
     /// to add edge.
