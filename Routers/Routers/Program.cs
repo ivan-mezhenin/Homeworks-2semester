@@ -4,5 +4,6 @@
 
 using Routers;
 
-Console.WriteLine("Routers");
+var graph = new Graph("/home/ivan/Homeworks-2semester/Routers/Routers/TestData/test.txt");
 
+Console.WriteLine($"{graph.AreAllVerticesRechable()}");

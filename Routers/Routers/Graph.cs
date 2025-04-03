@@ -2,6 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.ComponentModel.Design;
+
 namespace Routers;
 
 /// <summary>
@@ -9,11 +11,6 @@ namespace Routers;
 /// </summary>
 public class Graph
 {
-    /// <summary>
-    /// gets the adjacency list.
-    /// </summary>
-    public Dictionary<int, List<(int Neighbour, int Throughput)>> Edges { get; }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="Graph"/> class.
     /// </summary>
@@ -33,6 +30,11 @@ public class Graph
     }
 
     /// <summary>
+    /// gets the adjacency list.
+    /// </summary>
+    public Dictionary<int, List<(int Neighbour, int Throughput)>> Edges { get; }
+
+    /// <summary>
     /// to add edge.
     /// </summary>
     /// <param name="from">vertex.</param>
@@ -47,6 +49,44 @@ public class Graph
         }
 
         this.Edges.Add(from, [(to, throughput)]);
+    }
+
+    /// <summary>
+    /// return true if all vertices are rechable.
+    /// </summary>
+    /// <returns>true or false.</returns>
+    public bool AreAllVerticesRechable()
+    {
+        var startVertex = this.Edges.First().Key;
+
+        var visited = new Dictionary<int, bool>();
+
+        foreach (var vertex in this.Edges.Keys)
+        {
+            visited.Add(vertex, false);
+        }
+
+        this.DFS(startVertex, visited);
+
+        return visited.All(kv => kv.Value);
+    }
+
+    /// <summary>
+    /// depth first search.
+    /// </summary>
+    /// <param name="startVertex">vertex to start search.</param>
+    /// <param name="visited">dictionary of visited vertices.</param>
+    private void DFS(int startVertex, Dictionary<int, bool> visited)
+    {
+        visited[startVertex] = true;
+
+        foreach (var edge in this.Edges[startVertex])
+        {
+            if (!visited[edge.Neighbour])
+            {
+                DFS(edge.Neighbour, visited);
+            }
+        }
     }
 
     /// <summary>
