@@ -153,7 +153,7 @@ public class Graph
         {
             if (!visited[edge.Neighbour])
             {
-                DFS(edge.Neighbour, visited);
+                this.DFS(edge.Neighbour, visited);
             }
         }
     }
