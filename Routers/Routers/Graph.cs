@@ -112,6 +112,9 @@ public class Graph
     /// <param name="filePath">file for writing.</param>
     public void WriteGraphToFile(string filePath)
     {
+        Directory.CreateDirectory("Output");
+        filePath = Path.Combine("Output", filePath);
+
         using var writer = new StreamWriter(filePath);
         foreach (var (vertex, edges) in this.Edges)
         {

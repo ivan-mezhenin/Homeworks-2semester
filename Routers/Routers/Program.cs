@@ -22,5 +22,15 @@ catch (GraphIsNotConnectedException exception)
     Console.WriteLine(exception);
     return 1;
 }
+catch (FormatException exception)
+{
+    Console.WriteLine(exception);
+    return 1;
+}
+catch (FileNotFoundException exception)
+{
+    Console.WriteLine(exception);
+    return 1;
+}
 
 return 0;
