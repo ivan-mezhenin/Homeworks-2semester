@@ -4,6 +4,23 @@
 
 using Routers;
 
-var graph = new Graph("/home/ivan/Homeworks-2semester/Routers/Routers/TestData/test.txt");
+Console.WriteLine("Routers. Write dotnet run -- FileToRead FileToWrite");
 
-Console.WriteLine($"{graph.AreAllVerticesRechable()}");
+try
+{
+    var graph = new Graph(args[0]);
+    var answerGraph = graph.SearchMaxSpanningTree();
+    answerGraph.WriteGraphToFile(args[1]);
+}
+catch (PassingNullGraphException exception)
+{
+    Console.WriteLine(exception);
+    return 1;
+}
+catch (GraphIsNotConnectedException exception)
+{
+    Console.WriteLine(exception);
+    return 1;
+}
+
+return 0;

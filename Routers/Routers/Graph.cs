@@ -2,8 +2,6 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using System.ComponentModel.Design;
-
 namespace Routers;
 
 /// <summary>
@@ -52,10 +50,81 @@ public class Graph
     }
 
     /// <summary>
-    /// return true if all vertices are rechable.
+    /// to search max spanning tree.
+    /// </summary>
+    /// <returns>max spanning tree.</returns>
+    public Graph SearchMaxSpanningTree()
+    {
+        if (this.Edges.Count == 0)
+        {
+            throw new PassingNullGraphException("Passing null graph");
+        }
+
+        if (!this.AreAllVerticesReachable())
+        {
+            throw new GraphIsNotConnectedException(
+                "Passing not connected graph in function of searching max spanning tree");
+        }
+
+        var maxSpanningTree = new Graph();
+        var queue = new PriorityQueue<(int From, int To, int Throughput), int>(
+            Comparer<int>.Create((a, b) => b.CompareTo(a)));
+        var visited = new HashSet<int>();
+
+        int startVertex = this.Edges.Keys.First();
+        visited.Add(startVertex);
+
+        foreach (var edge in this.Edges[startVertex])
+        {
+            queue.Enqueue((startVertex, edge.Neighbour, edge.Throughput), edge.Throughput);
+        }
+
+        while (queue.Count > 0 && visited.Count < this.Edges.Count)
+        {
+            var currentEdge = queue.Dequeue();
+            var fromVertex = currentEdge.From;
+            var toVertex = currentEdge.To;
+            var throughput = currentEdge.Throughput;
+
+            if (visited.Contains(toVertex))
+            {
+                continue;
+            }
+
+            maxSpanningTree.Add(fromVertex, toVertex, throughput);
+            visited.Add(toVertex);
+
+            foreach (var edge in this.Edges[toVertex])
+            {
+                if (!visited.Contains(edge.Neighbour))
+                {
+                    queue.Enqueue((toVertex, edge.Neighbour, edge.Throughput), edge.Throughput);
+                }
+            }
+        }
+
+        return maxSpanningTree;
+    }
+
+    /// <summary>
+    /// to write graph to file.
+    /// </summary>
+    /// <param name="filePath">file for writing.</param>
+    public void WriteGraphToFile(string filePath)
+    {
+        using var writer = new StreamWriter(filePath);
+        foreach (var (vertex, edges) in this.Edges)
+        {
+            var formattedEdges = edges.Select(e => $"{e.Neighbour} ({e.Throughput})");
+            writer.WriteLine($"{vertex}: {string.Join(", ", formattedEdges)}");
+        }
+    }
+
+    /// <summary>
+    /// return true if all vertices are reachable.
     /// </summary>
     /// <returns>true or false.</returns>
-    public bool AreAllVerticesRechable()
+    public bool AreAllVerticesReachable()
     {
         var startVertex = this.Edges.First().Key;
 
@@ -105,7 +174,7 @@ public class Graph
         while (!reader.EndOfStream)
         {
             var line = reader.ReadLine();
-            if (line == null)
+            if (string.IsNullOrWhiteSpace(line))
             {
                 continue;
             }
