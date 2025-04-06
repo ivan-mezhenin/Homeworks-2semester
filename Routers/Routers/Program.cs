@@ -32,5 +32,10 @@ catch (FileNotFoundException exception)
     Console.WriteLine(exception);
     return 1;
 }
+catch (EdgeAlreadyExistException exception)
+{
+    Console.WriteLine(exception);
+    return 1;
+}
 
 return 0;

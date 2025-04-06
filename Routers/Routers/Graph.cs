@@ -42,6 +42,14 @@ public class Graph
     {
         if (this.Edges.TryGetValue(from, out var edges))
         {
+            foreach (var edge in edges)
+            {
+                if (edge.Neighbour == to)
+                {
+                    throw new EdgeAlreadyExistException($"Edge {from} -> {to} already exists.");
+                }
+            }
+
             edges.Add((to, throughput));
             return;
         }
