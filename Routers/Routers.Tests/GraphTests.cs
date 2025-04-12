@@ -44,7 +44,7 @@ public class GraphTests
     /// test catch exception file not found.
     /// </summary>
     [Test]
-    public void Graph_ReadFormNonexistentFile_ShouldCatchException()
+    public void Graph_ReadFormNonexistentFile_ShouldThrowException()
     {
         Assert.Throws<FileNotFoundException>(() =>
         {
@@ -58,7 +58,7 @@ public class GraphTests
     [Test]
     public void Graph_ReadGraphFromFile()
     {
-        var graph = new Graph(GetTestFilePath("TestReadGraphFromFile.txt"));
+        var graph = new Graph(Path.Combine(AppContext.BaseDirectory, "TestFiles", "TestReadGraphFromFile.txt"));
         var expectedGraph = new Graph();
 
         expectedGraph.Add(1, 2, 5);
@@ -71,19 +71,44 @@ public class GraphTests
         Assert.That(CompareGraph(graph, expectedGraph), Is.True);
     }
 
-    private static string GetTestFilePath(string fileName)
+    /// <summary>
+    /// test throw format exception.
+    /// </summary>
+    [Test]
+    public void Graph_ReadGraphFromFile_ShouldThrowFormatException()
     {
-        var projectDirectory = Directory.GetCurrentDirectory();
-        var directory = new DirectoryInfo(projectDirectory);
-
-        while (directory != null && !directory.GetFiles("*.csproj").Any())
+        Assert.Throws<FormatException>(() =>
         {
-            directory = directory.Parent;
-        }
+            var graph = new Graph(Path.Combine(AppContext.BaseDirectory, "TestFiles", "TestReadGraphFromFIleFormatException.txt"));
+        });
+    }
 
-        var fullPath = Path.Combine(directory!.FullName, "TestFiles", fileName);
+    /// <summary>
+    /// test throw graph is not connected exception.
+    /// </summary>
+    [Test]
+    public void Graph_SearchMaxSpanningTree_ShouldThrowGraphIsNotConnectedException()
+    {
+        var graph = new Graph(Path.Combine(AppContext.BaseDirectory, "TestFiles", "TestNotConnectedGraph.txt"));
+        Assert.Throws<GraphIsNotConnectedException>(() => graph.SearchMaxSpanningTree());
+    }
 
-        return fullPath;
+    /// <summary>
+    /// test search max spanning tree.
+    /// </summary>
+    [Test]
+    public void Graph_SearchMaxSpanningTree()
+    {
+        var graph = new Graph(Path.Combine(AppContext.BaseDirectory, "TestFiles", "TestSearchMaxSpanningTree.txt"));
+        var tree = graph.SearchMaxSpanningTree();
+        var expectedResult = new Graph();
+
+        expectedResult.Add(1, 2, 10);
+        expectedResult.Add(2, 4, 15);
+        expectedResult.Add(3, 5, 5);
+        expectedResult.Add(4, 3, 20);
+
+        Assert.That(CompareGraph(expectedResult, tree), Is.True);
     }
 
     private static bool CompareGraph(Graph graph1, Graph graph2)

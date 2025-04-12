@@ -27,5 +27,25 @@
     <ItemGroup>
       <ProjectReference Include="..\Routers\Routers.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="TestFiles\TestReadGraphFromFile.txt" />
+      <Content Include="TestFiles\TestReadGraphFromFile.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="TestFiles\TestReadGraphFromFIleFormatException.txt" />
+      <Content Include="TestFiles\TestReadGraphFromFIleFormatException.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="TestFiles\TestNotConnectedGraph.txt" />
+      <Content Include="TestFiles\TestNotConnectedGraph.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="TestFiles\TestSearchMaxSpanningTree.txt" />
+      <Content Include="TestFiles\TestSearchMaxSpanningTree.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="TestFiles\TestWriteGraphToFile.txt" />
+    </ItemGroup>
     
 </Project>

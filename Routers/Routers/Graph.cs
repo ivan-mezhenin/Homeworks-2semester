@@ -111,7 +111,26 @@ public class Graph
             }
         }
 
-        return maxSpanningTree;
+        var sortedEdges = new SortedDictionary<int, List<(int To, int Throughput)>>();
+
+        foreach (var vertex in maxSpanningTree.Edges.Keys.OrderBy(v => v))
+        {
+            var sortedVertexEdges = maxSpanningTree.Edges[vertex]
+                .OrderBy(v => v.Neighbour).ToList();
+
+            sortedEdges.Add(vertex, sortedVertexEdges);
+        }
+
+        var sortedMaxSpanningTree = new Graph();
+        foreach (var kvp in sortedEdges)
+        {
+            foreach (var edge in kvp.Value)
+            {
+                sortedMaxSpanningTree.Add(kvp.Key, edge.To, edge.Throughput);
+            }
+        }
+
+        return sortedMaxSpanningTree;
     }
 
     /// <summary>
@@ -120,11 +139,27 @@ public class Graph
     /// <param name="filePath">file for writing.</param>
     public void WriteGraphToFile(string filePath)
     {
-        Directory.CreateDirectory("Output");
-        filePath = Path.Combine("Output", filePath);
+        var sortedEdges = new SortedDictionary<int, List<(int To, int Throughput)>>();
+
+        foreach (var vertex in this.Edges.Keys.OrderBy(v => v))
+        {
+            var sortedVertexEdges = this.Edges[vertex]
+                .OrderBy(v => v.Neighbour).ToList();
+
+            sortedEdges.Add(vertex, sortedVertexEdges);
+        }
+
+        var sortedEdgesToWrite = new Graph();
+        foreach (var kvp in sortedEdges)
+        {
+            foreach (var edge in kvp.Value)
+            {
+                sortedEdgesToWrite.Add(kvp.Key, edge.To, edge.Throughput);
+            }
+        }
 
         using var writer = new StreamWriter(filePath);
-        foreach (var (vertex, edges) in this.Edges)
+        foreach (var (vertex, edges) in sortedEdgesToWrite.Edges)
         {
             var formattedEdges = edges.Select(e => $"{e.Neighbour} ({e.Throughput})");
             writer.WriteLine($"{vertex}: {string.Join(", ", formattedEdges)}");
@@ -135,7 +170,7 @@ public class Graph
     /// return true if all vertices are reachable.
     /// </summary>
     /// <returns>true or false.</returns>
-    public bool AreAllVerticesReachable()
+    private bool AreAllVerticesReachable()
     {
         var startVertex = this.Edges.First().Key;
 
