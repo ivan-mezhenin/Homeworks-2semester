@@ -1,20 +1,20 @@
-// <copyright file="Multiplication.cs" company="PlaceholderCompany">
+// <copyright file="Multiply.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
 namespace SyntaxTree;
 
 /// <summary>
-/// multiplication operation.
+/// multiply operation.
 /// </summary>
-public class Multiplication : Operation
+public class Multiply : Operation
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="Multiplication"/> class.
+    /// Initializes a new instance of the <see cref="Multiply"/> class.
     /// </summary>
     /// <param name="left">left child.</param>
     /// <param name="right">right child.</param>
-    public Multiplication(Node left, Node right)
+    public Multiply(Node left, Node right)
     : base(left, right)
     {
     }
