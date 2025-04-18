@@ -30,8 +30,8 @@ public class Divide : Operation
     /// <returns>result of evaluate.</returns>
     public override int Evaluate()
     {
-        var leftResult = this.left.Evaluate();
-        var rightResult = this.right.Evaluate();
+        var leftResult = this.Left.Evaluate();
+        var rightResult = this.Right.Evaluate();
 
         if (leftResult == 0)
         {

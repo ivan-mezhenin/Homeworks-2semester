@@ -10,25 +10,25 @@ namespace SyntaxTree;
 public abstract class Operation : Node
 {
     /// <summary>
-    /// left child of operator.
-    /// </summary>
-    protected Node left;
-
-    /// <summary>
-    /// right child of operator.
-    /// </summary>
-    protected Node right;
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="Operation"/> class.
     /// </summary>
     /// <param name="left">left number.</param>
     /// <param name="right">right number.</param>
     protected Operation(Node left, Node right)
     {
-        this.left = left;
-        this.right = right;
+        this.Left = left;
+        this.Right = right;
     }
+
+    /// <summary>
+    /// Gets left child of operator.
+    /// </summary>
+    protected Node Left { get; }
+
+    /// <summary>
+    /// Gets right child of operator.
+    /// </summary>
+    protected Node Right { get; }
 
     /// <summary>
     /// Gets symbol of operation.
@@ -40,7 +40,7 @@ public abstract class Operation : Node
     /// </summary>
     /// <returns>string expression.</returns>
     public override string Print()
-        => $"({this.OperationSymbol} {this.left.Print()}, {this.right.Print()})";
+        => $"({this.OperationSymbol} {this.Left.Print()} {this.Right.Print()})";
 
     /// <summary>
     /// to calculate expression.

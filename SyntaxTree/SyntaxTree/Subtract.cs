@@ -29,5 +29,5 @@ public class Subtract : Operation
     /// </summary>
     /// <returns>result of evaluate.</returns>
     public override int Evaluate()
-        => this.left.Evaluate() - this.right.Evaluate();
+        => this.Left.Evaluate() - this.Right.Evaluate();
 }
