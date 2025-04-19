@@ -1,4 +1,4 @@
-// <copyright file="EmptyFileException.cs" company="PlaceholderCompany">
+// <copyright file="EmptyExpressionException.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -7,13 +7,13 @@ namespace SyntaxTree;
 /// <summary>
 /// empty file exception.
 /// </summary>
-public class EmptyFileException : Exception
+public class EmptyExpressionException : Exception
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="EmptyFileException"/> class.
+    /// Initializes a new instance of the <see cref="EmptyExpressionException"/> class.
     /// </summary>
     /// <param name="message">message to return.</param>
-    public EmptyFileException(string message)
+    public EmptyExpressionException(string message)
         : base(message)
     {
     }

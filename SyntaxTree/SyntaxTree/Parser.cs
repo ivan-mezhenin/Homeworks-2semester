@@ -18,6 +18,11 @@ public class Parser
     public Node Parse(string expression)
     {
         using var reader = new StringReader(expression);
+        if (string.IsNullOrEmpty(expression))
+        {
+            throw new EmptyExpressionException("Empty expression");
+        }
+
         return this.ParseNode(reader);
     }
 
@@ -36,10 +41,63 @@ public class Parser
         var expression = File.ReadAllText(filePath);
         if (string.IsNullOrEmpty(expression))
         {
-            throw new EmptyFileException("Empty file");
+            throw new EmptyExpressionException("Empty file");
         }
 
         return this.Parse(expression);
+    }
+
+    /// <summary>
+    /// to skip whitespaces.
+    /// </summary>
+    /// <param name="reader">expression.</param>
+    private static void SkipWhiteSpace(StringReader reader)
+    {
+        while (char.IsWhiteSpace((char)reader.Peek()))
+        {
+            reader.Read();
+        }
+    }
+
+    /// <summary>
+    /// to read operation.
+    /// </summary>
+    /// <param name="reader">expression to read.</param>
+    /// <returns>operation.</returns>
+    private static char ReadOperation(StringReader reader)
+    {
+        SkipWhiteSpace(reader);
+
+        var operation = (char)reader.Read();
+
+        return operation switch
+        {
+            '+' or '-' or '*' or '/' => operation,
+            _ => throw new FormatException($"Unexpected operation {operation}"),
+        };
+    }
+
+    /// <summary>
+    /// to parse operand.
+    /// </summary>
+    /// <param name="reader">expression to parse.</param>
+    /// <returns>parsed operand.</returns>
+    private static Operand ParseOperand(StringReader reader)
+    {
+        SkipWhiteSpace(reader);
+        var digits = new StringBuilder();
+
+        while (char.IsDigit((char)reader.Peek()))
+        {
+            digits.Append((char)reader.Read());
+        }
+
+        if (digits.Length == 0)
+        {
+            throw new FormatException($"Expected digits");
+        }
+
+        return new Operand(int.Parse(digits.ToString()));
     }
 
     /// <summary>
@@ -49,7 +107,7 @@ public class Parser
     /// <returns>parsed node.</returns>
     private Node ParseNode(StringReader reader)
     {
-        this.SkipWhiteSpace(reader);
+        SkipWhiteSpace(reader);
 
         var nextChar = reader.Peek();
         if (nextChar == -1)
@@ -69,7 +127,7 @@ public class Parser
 
             case var _ when char.IsDigit(currentChar):
             {
-                return this.ParseOperand(reader);
+                return ParseOperand(reader);
             }
 
             case '+':
@@ -94,11 +152,11 @@ public class Parser
     /// <returns>parsed node.</returns>
     private Node ParseOperation(StringReader reader)
         {
-            var operation = this.ReadOperation(reader);
+            var operation = ReadOperation(reader);
             var left = this.ParseNode(reader);
             var right = this.ParseNode(reader);
 
-            this.SkipWhiteSpace(reader);
+            SkipWhiteSpace(reader);
             if (reader.Read() != ')')
             {
                 throw new FormatException("Missing closing parenthesis");
@@ -113,57 +171,4 @@ public class Parser
                 _ => throw new FormatException($"Unknown operation {operation}"),
             };
         }
-
-    /// <summary>
-    /// to read operation.
-    /// </summary>
-    /// <param name="reader">expression to read.</param>
-    /// <returns>operation.</returns>
-    private char ReadOperation(StringReader reader)
-    {
-        this.SkipWhiteSpace(reader);
-
-        var operation = (char)reader.Read();
-
-        return operation switch
-        {
-            '+' or '-' or '*' or '/' => operation,
-            _ => throw new FormatException($"Unexpected operation {operation}"),
-        };
-    }
-
-    /// <summary>
-    /// to parse operand.
-    /// </summary>
-    /// <param name="reader">expression to parse.</param>
-    /// <returns>parsed operand.</returns>
-    private Node ParseOperand(StringReader reader)
-    {
-        this.SkipWhiteSpace(reader);
-        var digits = new StringBuilder();
-
-        while (char.IsDigit((char)reader.Peek()))
-        {
-            digits.Append((char)reader.Read());
-        }
-
-        if (digits.Length == 0)
-        {
-            throw new FormatException($"Expected digits");
-        }
-
-        return new Operand(int.Parse(digits.ToString()));
-    }
-
-    /// <summary>
-    /// to skip whitespaces.
-    /// </summary>
-    /// <param name="reader">expression.</param>
-    private void SkipWhiteSpace(StringReader reader)
-    {
-        while (char.IsWhiteSpace((char)reader.Peek()))
-        {
-            reader.Read();
-        }
-    }
 }
