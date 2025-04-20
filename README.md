@@ -5,7 +5,7 @@ This repository contains Homework solutions from the <a href="https://github.com
 
 # <h2> <div align="center">Homework</div> </h2>
 
-<div align="center">
+<div>
 
 [**Burrows–Wheeler transform**](https://github.com/ivan-mezhenin/Homeworks-2semester/pull/1)  
 [**Trie**](https://github.com/ivan-mezhenin/Homeworks-2semester/pull/2)  
