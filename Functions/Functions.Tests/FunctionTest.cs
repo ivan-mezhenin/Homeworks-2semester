@@ -32,6 +32,30 @@ public class FunctionTest
         var data = new List<int> { 9, 1, 12, 129 };
         var expectedResult = Enumerable.Repeat(1, 4).ToList();
 
-        Assert.That(Function.Map(data, x => 2), Is.EqualTo(expectedResult));
+        Assert.That(Function.Map(data, x => 1), Is.EqualTo(expectedResult));
+    }
+
+    /// <summary>
+    /// test filter with function which check is number odd.
+    /// </summary>
+    [Test]
+    public void Function_Filter_IntList_ShouldReturnListWithOddElements()
+    {
+        var data = new List<int> { 1, 3, 5, 2, 20, 13, 100 };
+        var expectedResult = new List<int> { 1, 3, 5, 13 };
+
+        Assert.That(Function.Filter(data, x => x % 2 == 1), Is.EqualTo(expectedResult));
+    }
+
+    /// <summary>
+    /// test filter with function which check is number equal 3.
+    /// </summary>
+    [Test]
+    public void Function_Filter_IntList_ShouldReturnEmptyList()
+    {
+        var data = Enumerable.Repeat(10, 99).ToList();
+        var expectedResult = new List<int>();
+
+        Assert.That(Function.Filter(data, x => x == 3), Is.EqualTo(expectedResult));
     }
 }

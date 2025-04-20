@@ -25,4 +25,25 @@ public static class Function
 
         return result;
     }
+
+    /// <summary>
+    /// returns a list of elements that, when inserted into the function, return true.
+    /// </summary>
+    /// <param name="data">list.</param>
+    /// <param name="function">function to apply.</param>
+    /// <returns>filter list.</returns>
+    public static List<int> Filter(List<int> data, Func<int, bool> function)
+    {
+        var result = new List<int>();
+
+        foreach (var element in data)
+        {
+            if (function(element))
+            {
+                result.Add(element);
+            }
+        }
+
+        return result;
+    }
 }
