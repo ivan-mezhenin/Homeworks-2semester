@@ -58,4 +58,17 @@ public class FunctionTest
 
         Assert.That(Function.Filter(data, x => x == 3), Is.EqualTo(expectedResult));
     }
+
+    /// <summary>
+    /// test fold with function which multiply value by each element of list.
+    /// </summary>
+    [Test]
+    public void Function_Fold_IntList_FunctionWhichMultiplyValueByEachElement()
+    {
+        var data = new List<int> { 1, 2, 3 };
+        const int startValue = 1;
+        const int expectedResult = 6;
+
+        Assert.That(Function.Fold(data, startValue, (acc, elem) => acc * elem), Is.EqualTo(expectedResult));
+    }
 }

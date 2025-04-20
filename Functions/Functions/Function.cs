@@ -18,6 +18,7 @@ public static class Function
     public static List<int> Map(List<int> data, Func<int, int> function)
     {
         List<int> result = [];
+
         foreach (var item in data)
         {
             result.Add(function(item));
@@ -54,13 +55,13 @@ public static class Function
     /// <param name="startValue">start value.</param>
     /// <param name="function">function to apply.</param>
     /// <returns>result value.</returns>
-    public static int Fold(List<int> data, int startValue, Func<(int Value, int CurrentElement), int> function)
+    public static int Fold(List<int> data, int startValue, Func<int, int, int> function)
     {
         var result = startValue;
 
         foreach (var item in data)
         {
-            result = function((result, item));
+            result = function(result, item);
         }
 
         return result;
