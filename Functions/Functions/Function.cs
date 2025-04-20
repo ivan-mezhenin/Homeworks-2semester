@@ -46,4 +46,23 @@ public static class Function
 
         return result;
     }
+
+    /// <summary>
+    /// to evaluate the value after going through the entire list.
+    /// </summary>
+    /// <param name="data">list.</param>
+    /// <param name="startValue">start value.</param>
+    /// <param name="function">function to apply.</param>
+    /// <returns>result value.</returns>
+    public static int Fold(List<int> data, int startValue, Func<(int Value, int CurrentElement), int> function)
+    {
+        var result = startValue;
+
+        foreach (var item in data)
+        {
+            result = function((result, item));
+        }
+
+        return result;
+    }
 }
