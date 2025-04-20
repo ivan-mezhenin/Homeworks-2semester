@@ -3,7 +3,7 @@ This repository contains Homework solutions from the <a href="https://github.com
   2nd semester, C#
 </h2
 
-# <h2 <div align="center">Homework</div>>
+# <h2> <div align="center">Homework</div> </h2>
 
 <div align="center">
 
