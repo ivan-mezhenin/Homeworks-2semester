@@ -90,6 +90,11 @@ public class SList<T> : IList<T>
     /// <param name="item">item to add.</param>
     public void Add(T item)
     {
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
         var newLevel = this.GetRandomLevel();
         var current = this.head;
         SkipListElement? downNode = null;
@@ -119,9 +124,35 @@ public class SList<T> : IList<T>
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc/>
     public bool Contains(T item)
     {
-        throw new NotImplementedException();
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        var current = this.head;
+
+        for (var i = MaxLevel - 1; i >= 0; --i)
+        {
+            while (current.Next != null && current.Next != this.nil &&
+                   current.Next.Value != null &&
+                   current.Next.Value.CompareTo(item) < 0)
+            {
+                current = current.Next;
+            }
+
+            if (current.Next != null && current.Next.Value != null &&
+                current.Next.Value.CompareTo(item) == 0)
+            {
+                return true;
+            }
+
+            current = current.Down ?? current;
+        }
+
+        return false;
     }
 
     public void CopyTo(T[] array, int arrayIndex)
