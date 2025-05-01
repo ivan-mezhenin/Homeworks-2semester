@@ -65,23 +65,33 @@ public class SList<T> : IList<T>
         return level;
     }
 
-    private class SkipListElement(T? value, SkipListElement? next, SkipListElement? down)
-    {
-        public T? Value { get; set; } = value;
-
-        public SkipListElement? Next { get; set; } = next;
-
-        public SkipListElement? Down { get; set; } = down;
-    }
-
+    /// <inheritdoc/>
     public IEnumerator<T> GetEnumerator()
     {
-        throw new NotImplementedException();
+        var current = this.bottomHead.Next;
+        var initialVersion = this.version;
+
+        while (current != this.nil && current != null)
+        {
+            if (initialVersion != this.version)
+            {
+                throw new InvalidOperationException("Collection was modified.");
+            }
+
+            if (current.Value == null)
+            {
+                throw new NullReferenceException("Null element's value.");
+            }
+
+            yield return current.Value;
+            current = current.Next;
+        }
     }
 
+    /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return GetEnumerator();
+        return this.GetEnumerator();
     }
 
     /// <summary>
@@ -160,12 +170,55 @@ public class SList<T> : IList<T>
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc/>
     public bool Remove(T item)
     {
-        throw new NotImplementedException();
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        if (!this.Contains(item))
+        {
+            return false;
+        }
+
+        var current = this.head;
+        var isRemoved = false;
+
+        for (var i = MaxLevel - 1; i >= 0; --i)
+        {
+            while (current.Next != null
+                   && current.Next != this.nil
+                   && current.Next.Value != null
+                   && current.Next.Value.CompareTo(item) < 0)
+            {
+                current = current.Next;
+            }
+
+            if (current.Next != this.nil &&
+                current.Next != null &&
+                current.Next.Value != null &&
+                current.Next.Value.CompareTo(item) == 0)
+            {
+                current.Next = current.Next.Next;
+                isRemoved = true;
+            }
+
+            current = current.Down ?? current;
+        }
+
+        if (isRemoved)
+        {
+            --this.Count;
+            ++this.version;
+        }
+
+        return isRemoved;
     }
 
     public int Count { get; private set; }
+
     public bool IsReadOnly { get; }
 
     /// <inheritdoc/>
@@ -208,10 +261,17 @@ public class SList<T> : IList<T>
     public void Insert(int index, T item)
         => throw new NotSupportedException("Insert by index is not supported in skip list.");
 
+    /// <inheritdoc/>
     public void RemoveAt(int index)
-    {
-        throw new NotImplementedException();
-    }
+        {
+            var value = this[index];
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(index));
+            }
+
+            this.Remove(value);
+        }
 
     /// <inheritdoc/>
     public T this[int index]
@@ -239,5 +299,14 @@ public class SList<T> : IList<T>
         }
 
         set => throw new NotImplementedException();
+    }
+
+    private class SkipListElement(T? value, SkipListElement? next, SkipListElement? down)
+    {
+        public T? Value { get; set; } = value;
+
+        public SkipListElement? Next { get; set; } = next;
+
+        public SkipListElement? Down { get; set; } = down;
     }
 }
