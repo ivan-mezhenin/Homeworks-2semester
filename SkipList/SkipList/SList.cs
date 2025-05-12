@@ -49,20 +49,32 @@ public class SList<T> : IList<T>
         }
     }
 
-    /// <summary>
-    /// to get random level.
-    /// </summary>
-    /// <returns>level.</returns>
-    private int GetRandomLevel()
+    /// <inheritdoc/>
+    public T this[int index]
     {
-        var level = 1;
-
-        while (this.isLevelUp.NextDouble() < 0.5 && level < MaxLevel)
+        get
         {
-            ++level;
+            if (index < 0 || index >= this.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            var current = this.bottomHead.Next ?? throw new EmptySkipListException("Attempt to take an item from empty list");
+
+            for (var i = 0; i <= index; ++i)
+            {
+                current = current.Next ?? throw new InvalidOperationException("Index is out of range.");
+            }
+
+            if (current.Value == null)
+            {
+                throw new InvalidOperationException("SkipList contains null value at specified index");
+            }
+
+            return current.Value;
         }
 
-        return level;
+        set => throw new NotImplementedException();
     }
 
     /// <inheritdoc/>
@@ -94,10 +106,7 @@ public class SList<T> : IList<T>
         return this.GetEnumerator();
     }
 
-    /// <summary>
-    /// to add item in list.
-    /// </summary>
-    /// <param name="item">item to add.</param>
+    /// <inheritdoc/>
     public void Add(T item)
     {
         if (item == null)
@@ -129,9 +138,20 @@ public class SList<T> : IList<T>
         ++this.version;
     }
 
+    /// <inheritdoc/>
     public void Clear()
     {
-        throw new NotImplementedException();
+        this.bottomHead = new SkipListElement(default, this.nil, this.nil);
+        var current = this.bottomHead;
+
+        for (var i = 1; i < MaxLevel; i++)
+        {
+            current = new SkipListElement(default, this.nil, current);
+        }
+
+        this.head = current;
+        this.Count = 0;
+        ++this.version;
     }
 
     /// <inheritdoc/>
@@ -165,6 +185,7 @@ public class SList<T> : IList<T>
         return false;
     }
 
+    /// <inheritdoc/>
     public void CopyTo(T[] array, int arrayIndex)
     {
         throw new NotImplementedException();
@@ -219,7 +240,7 @@ public class SList<T> : IList<T>
 
     public int Count { get; private set; }
 
-    public bool IsReadOnly { get; }
+    public bool IsReadOnly => false;
 
     /// <inheritdoc/>
     public int IndexOf(T item)
@@ -264,41 +285,23 @@ public class SList<T> : IList<T>
     /// <inheritdoc/>
     public void RemoveAt(int index)
         {
-            var value = this[index];
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(index));
-            }
-
-            this.Remove(value);
+            this.Remove(this[index]);
         }
 
-    /// <inheritdoc/>
-    public T this[int index]
+    /// <summary>
+    /// to get random level.
+    /// </summary>
+    /// <returns>level.</returns>
+    private int GetRandomLevel()
     {
-        get
+        var level = 1;
+
+        while (this.isLevelUp.NextDouble() < 0.5 && level < MaxLevel)
         {
-            if (index < 0 || index >= this.Count)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
-
-            var current = this.bottomHead.Next ?? throw new EmptySkipListException("Attempt to take an item from empty list");
-
-            for (var i = 0; i <= index; ++i)
-            {
-                current = current.Next ?? throw new InvalidOperationException("Index is out of range.");
-            }
-
-            if (current.Value == null)
-            {
-                throw new InvalidOperationException("SkipList contains null value at specified index");
-            }
-
-            return current.Value;
+            ++level;
         }
 
-        set => throw new NotImplementedException();
+        return level;
     }
 
     private class SkipListElement(T? value, SkipListElement? next, SkipListElement? down)
