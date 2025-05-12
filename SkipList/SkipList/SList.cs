@@ -50,6 +50,12 @@ public class SList<T> : IList<T>
     }
 
     /// <inheritdoc/>
+    public int Count { get; private set; }
+
+    /// <inheritdoc/>
+    public bool IsReadOnly => false;
+
+    /// <inheritdoc/>
     public T this[int index]
     {
         get
@@ -237,10 +243,6 @@ public class SList<T> : IList<T>
 
         return isRemoved;
     }
-
-    public int Count { get; private set; }
-
-    public bool IsReadOnly => false;
 
     /// <inheritdoc/>
     public int IndexOf(T item)
