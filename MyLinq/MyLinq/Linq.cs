@@ -2,14 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using System.Diagnostics;
-
 namespace MyLinq;
 
 /// <summary>
 /// .
 /// </summary>
-public class Linq
+public static class Linq
 {
     /// <summary>
     /// Generates an infinite sequence of prime numbers.
@@ -27,6 +25,35 @@ public class Linq
             }
 
             ++number;
+        }
+    }
+
+    /// <summary>
+    /// return sequence of first n elements.
+    /// </summary>
+    /// <param name="seq">sequence to return first n elements.</param>
+    /// <param name="n">length of sequence.</param>
+    /// <typeparam name="T">type of sequence's element.</typeparam>
+    /// <returns>sequence.</returns>
+    public static IEnumerable<T> Take<T>(this IEnumerable<T> seq, int n)
+    {
+        if (n <= 0)
+        {
+            yield break;
+        }
+
+        var count = 0;
+
+        foreach (var item in seq)
+        {
+            yield return item;
+
+            ++count;
+
+            if (count >= n)
+            {
+                yield break;
+            }
         }
     }
 
