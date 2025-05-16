@@ -5,7 +5,7 @@
 namespace MyLinq;
 
 /// <summary>
-/// .
+/// methods for IEnumerable collections.
 /// </summary>
 public static class Linq
 {
@@ -57,6 +57,13 @@ public static class Linq
         }
     }
 
+    /// <summary>
+    /// return sequence with skipped first n elements.
+    /// </summary>
+    /// <param name="seq">sequence to skipped elements.</param>
+    /// <param name="n">amount of elements to skip.</param>
+    /// <typeparam name="T">type of sequence's element.</typeparam>
+    /// <returns>sequence.</returns>
     public static IEnumerable<T> Skip<T>(this IEnumerable<T> seq, int n)
     {
         var count = 0;

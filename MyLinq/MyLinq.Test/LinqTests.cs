@@ -28,4 +28,25 @@ public class LinqTests
     {
         Assert.That(((char[])['a', 'b', 'c', 'd', 'e', 'f']).Take(4), Is.EquivalentTo((char[])['a', 'b', 'c', 'd']));
     }
+
+    /// <summary>
+    /// test method Skip by skipping first 8 elements of char array.
+    /// </summary>
+    [Test]
+    public void Linq_Skip_SkipFiveElements()
+    {
+        var numbers = "Hello, World!".ToCharArray();
+
+        Assert.That(numbers.Skip(8), Is.EquivalentTo("orld!".ToCharArray()));
+    }
+
+    /// <summary>
+    /// test method take and skip combination by getting 5 elements with skipping first 3 numbers.
+    /// </summary>
+    [Test]
+    public void Linq_SkipAndTakeCombination()
+    {
+        var primeNumbers = Linq.GetPrimes();
+        Assert.That(primeNumbers.Skip(3).Take(5), Is.EquivalentTo((int[])[7, 11, 13, 17, 19]));
+    }
 }
