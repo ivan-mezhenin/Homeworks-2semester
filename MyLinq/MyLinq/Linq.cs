@@ -57,6 +57,21 @@ public static class Linq
         }
     }
 
+    public static IEnumerable<T> Skip<T>(this IEnumerable<T> seq, int n)
+    {
+        var count = 0;
+
+        foreach (var item in seq)
+        {
+            ++count;
+
+            if (count > n)
+            {
+                yield return item;
+            }
+        }
+    }
+
     private static bool IsPrime(int number)
     {
         if (number <= 1)
