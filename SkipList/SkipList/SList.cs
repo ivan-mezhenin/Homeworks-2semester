@@ -194,7 +194,27 @@ public class SList<T> : IList<T>
     /// <inheritdoc/>
     public void CopyTo(T[] array, int arrayIndex)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(array);
+
+        if (arrayIndex < 0 || arrayIndex >= array.Length || arrayIndex + this.Count > array.Length)
+        {
+            throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+        }
+
+        var current = this.bottomHead.Next;
+
+        while (current != this.nil)
+        {
+            if (current == null || current.Value == null)
+            {
+                throw new ArgumentException("Element is empty.");
+            }
+
+            array[arrayIndex] = current.Value;
+
+            ++arrayIndex;
+            current = current.Next;
+        }
     }
 
     /// <inheritdoc/>
