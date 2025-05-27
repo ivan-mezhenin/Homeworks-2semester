@@ -8,7 +8,7 @@ This repository contains Homework solutions from the <a href="https://github.com
 <div>
 
 [**Burrows–Wheeler transform**](https://github.com/ivan-mezhenin/Homeworks-2semester/pull/1)  
-[**Trie**](https://github.com/ivan-mezhenin/Homeworks-2semester/tree/main/Trie) 
+[**Trie**](https://github.com/ivan-mezhenin/Homeworks-2semester/tree/main/Trie)  
 [**LZW algorithm**](https://github.com/ivan-mezhenin/Homeworks-2semester/pull/3)  
 [**Invitation Line**](https://github.com/ivan-mezhenin/Homeworks-2semester/pull/4)  
 [**Routers**](https://github.com/ivan-mezhenin/Homeworks-2semester/pull/5)  
