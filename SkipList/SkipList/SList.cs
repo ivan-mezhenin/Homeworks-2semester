@@ -28,7 +28,7 @@ public class SList<T> : IList<T>
         this.bottomHead = new SkipListElement(default, this.nil, this.nil);
         var current = this.bottomHead;
 
-        for (var i = 1; i < MaxLevel; i++)
+        for (var i = 0; i < MaxLevel; i++)
         {
             current = new SkipListElement(default, this.nil, current);
         }
@@ -67,7 +67,7 @@ public class SList<T> : IList<T>
 
             var current = this.bottomHead.Next ?? throw new EmptySkipListException("Attempt to take an item from empty list");
 
-            for (var i = 0; i <= index; ++i)
+            for (var i = 0; i < index; ++i)
             {
                 current = current.Next ?? throw new InvalidOperationException("Index is out of range.");
             }
@@ -122,22 +122,32 @@ public class SList<T> : IList<T>
 
         var newLevel = this.GetRandomLevel();
         var current = this.head;
-        SkipListElement? downNode = null;
+        var updates = new SkipListElement[newLevel];
+
+        for (var i = 0; i <= MaxLevel - newLevel; i++)
+        {
+            current = current.Down ?? current;
+        }
 
         for (var i = newLevel - 1; i >= 0; --i)
         {
-            while (current.Next != null && current.Next != this.nil &&
-                   current.Next.Value != null &&
-                   current.Next.Value.CompareTo(item) < 0)
+            while (current != null && current.Next != null && current.Next != this.nil && current.Next.Value != null &&
+                   current.Next.Value.CompareTo(current.Value) > 0)
             {
                 current = current.Next;
             }
 
-            var newNode = new SkipListElement(item, current.Next, i == 0 ? this.nil : downNode);
-            current.Next = newNode;
-            downNode = newNode;
+            updates[i] = current ?? throw new InvalidOperationException("Attempt to add a null value to the list.");
+            current = current.Down;
+        }
 
-            current = current.Down ?? current;
+        SkipListElement? lowerNode = null;
+
+        for (var i = 0; i < newLevel; ++i)
+        {
+            var newNode = new SkipListElement(item, updates[i].Next, lowerNode);
+            updates[i].Next = newNode;
+            lowerNode = newNode;
         }
 
         ++this.Count;
