@@ -144,7 +144,7 @@ public class SListTest
     /// test for correct copy.
     /// </summary>
     [Test]
-    public void CopyTo_ValidParameters_CopiesElementsCorrectly()
+    public void SList_CopyTo_ValidParameters_CopiesElementsCorrectly()
     {
         var list = new SList<int>([1, 2, 3]);
         var array = new int[3];
@@ -158,7 +158,7 @@ public class SListTest
     /// test coping in list with smaller size throws exception.
     /// </summary>
     [Test]
-    public void CopyTo_InsufficientSpace_ThrowsArgumentOutOfRangeException()
+    public void SList_CopyTo_InsufficientSpace_ThrowsArgumentOutOfRangeException()
     {
         var list = new SList<int>([1, 2, 3]);
         var smallArray = new int[2];
@@ -170,7 +170,7 @@ public class SListTest
     /// test correct remove element.
     /// </summary>
     [Test]
-    public void Remove_ExistingItem_ReturnsTrueAndRemovesItem()
+    public void SList_Remove_ExistingItem_ReturnsTrueAndRemovesItem()
     {
         var testedList = new SList<string>(["apple", "banana"]);
 
@@ -188,13 +188,46 @@ public class SListTest
     /// test for correct removing non-existing item.
     /// </summary>
     [Test]
-    public void Remove_NonExistingItem_ReturnsFalse()
+    public void SList_Remove_NonExistingItem_ReturnsFalse()
     {
         var list = new SList<int>([1, 2, 3]);
-
         var result = list.Remove(4);
+        const int expected = 3;
 
         Assert.That(result, Is.False);
-        Assert.That(list.Count, Is.EqualTo(3));
+        Assert.That(list.Count, Is.EqualTo(expected));
     }
+
+    /// <summary>
+    /// test for correct index of existing item.
+    /// </summary>
+    [Test]
+    public void SList_IndexOf_ExistingItem_ReturnsCorrectIndex()
+    {
+        var testedList = new SList<string>(["apple", "banana", "chocolate"]);
+        var result = testedList.IndexOf("chocolate");
+        const int expected = 2;
+
+        Assert.That(result, Is.EqualTo(expected));
+    }
+
+    /// <summary>
+    /// test for correct index of non-existing item.
+    /// </summary>
+    [Test]
+    public void SList_IndexOf_NonExistingItem_ReturnsCorrectIndex()
+    {
+        var testedList = new SList<string>(["apple", "banana", "chocolate"]);
+        var result = testedList.IndexOf("ivan");
+        const int expected = -1;
+
+        Assert.That(result, Is.EqualTo(expected));
+    }
+
+    /// <summary>
+    /// test calling method Insert throws NotSupportedException.
+    /// </summary>
+    [Test]
+    public void SList_Insert_ThrowsNotSupportedException()
+        => Assert.Throws<NotSupportedException>(() => new SList<int>().Insert(0, 1));
 }
