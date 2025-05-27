@@ -132,7 +132,7 @@ public class SList<T> : IList<T>
         for (var i = newLevel - 1; i >= 0; --i)
         {
             while (current != null && current.Next != null && current.Next != this.nil && current.Next.Value != null &&
-                   current.Next.Value.CompareTo(current.Value) > 0)
+                   current.Next.Value.CompareTo(item) < 0)
             {
                 current = current.Next;
             }
@@ -180,7 +180,7 @@ public class SList<T> : IList<T>
 
         var current = this.head;
 
-        for (var i = MaxLevel - 1; i >= 0; --i)
+        while (current != null)
         {
             while (current.Next != null && current.Next != this.nil &&
                    current.Next.Value != null &&
@@ -195,7 +195,7 @@ public class SList<T> : IList<T>
                 return true;
             }
 
-            current = current.Down ?? current;
+            current = current.Down;
         }
 
         return false;
@@ -243,7 +243,7 @@ public class SList<T> : IList<T>
         var current = this.head;
         var isRemoved = false;
 
-        for (var i = MaxLevel - 1; i >= 0; --i)
+        while (current != null)
         {
             while (current.Next != null
                    && current.Next != this.nil
@@ -262,7 +262,7 @@ public class SList<T> : IList<T>
                 isRemoved = true;
             }
 
-            current = current.Down ?? current;
+            current = current.Down;
         }
 
         if (isRemoved)
@@ -328,7 +328,7 @@ public class SList<T> : IList<T>
     {
         var level = 1;
 
-        while (this.isLevelUp.NextDouble() < 0.5 && level < MaxLevel)
+        while (this.isLevelUp.NextDouble() < 0.65 && level < MaxLevel)
         {
             ++level;
         }
