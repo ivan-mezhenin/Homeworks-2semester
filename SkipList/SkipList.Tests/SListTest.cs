@@ -128,4 +128,73 @@ public class SListTest
         },
             Is.False);
     }
+
+    /// <summary>
+    /// list contains item.
+    /// </summary>
+    [Test]
+    public void SList_Contains_ShouldReturnTrue()
+    {
+        var testedList = new SList<int> { 1 };
+
+        Assert.That(testedList.Contains(1), Is.True);
+    }
+
+    /// <summary>
+    /// test for correct copy.
+    /// </summary>
+    [Test]
+    public void CopyTo_ValidParameters_CopiesElementsCorrectly()
+    {
+        var list = new SList<int>([1, 2, 3]);
+        var array = new int[3];
+
+        list.CopyTo(array, 0);
+
+        Assert.That(array, Is.EqualTo((int[])[1, 2, 3]));
+    }
+
+    /// <summary>
+    /// test coping in list with smaller size throws exception.
+    /// </summary>
+    [Test]
+    public void CopyTo_InsufficientSpace_ThrowsArgumentOutOfRangeException()
+    {
+        var list = new SList<int>([1, 2, 3]);
+        var smallArray = new int[2];
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => list.CopyTo(smallArray, 0));
+    }
+
+    /// <summary>
+    /// test correct remove element.
+    /// </summary>
+    [Test]
+    public void Remove_ExistingItem_ReturnsTrueAndRemovesItem()
+    {
+        var testedList = new SList<string>(["apple", "banana"]);
+
+        var result = testedList.Remove("apple");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.True);
+            Assert.That(testedList.Contains("apple"), Is.False);
+            Assert.That(testedList.Count, Is.EqualTo(1));
+        });
+    }
+
+    /// <summary>
+    /// test for correct removing non-existing item.
+    /// </summary>
+    [Test]
+    public void Remove_NonExistingItem_ReturnsFalse()
+    {
+        var list = new SList<int>([1, 2, 3]);
+
+        var result = list.Remove(4);
+
+        Assert.That(result, Is.False);
+        Assert.That(list.Count, Is.EqualTo(3));
+    }
 }
