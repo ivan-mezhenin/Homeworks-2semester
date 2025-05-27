@@ -3,7 +3,7 @@ namespace BWT;
 /// <summary>
 /// tests for BWT.
 /// </summary>
-public class Tests
+public class Test
 {
     /// <summary>
     /// complete all tests.
@@ -34,20 +34,20 @@ public class Tests
     }
 
     private static bool Test1()
-    => WordTransform.Transform("abacaba") == ("bcabaaa", 3);
+    => BWt.Transform("abacaba") == ("bcabaaa", 3);
 
     private static bool Test2()
-    => WordTransform.Transform("абракадабра") == ("рдакраааабб", 3);
+    => BWt.Transform("абракадабра") == ("рдакраааабб", 3);
 
     private static bool Test3()
-    => WordTransform.Transform("hahaha") == ("hhhaaa", 4);
+    => BWt.Transform("hahaha") == ("hhhaaa", 4);
 
     private static bool Test4()
-    => WordTransform.ReverseTransform("bcabaaa", 3) == "abacaba";
+    => BWt.ReverseTransform("bcabaaa", 3) == "abacaba";
 
     private static bool Test5()
-    => WordTransform.ReverseTransform("вина", 3) == "иван";
+    => BWt.ReverseTransform("вина", 3) == "иван";
 
     private static bool Test6()
-    => WordTransform.ReverseTransform("nnbaaa", 4) == "banana";
+    => BWt.ReverseTransform("nnbaaa", 4) == "banana";
 }

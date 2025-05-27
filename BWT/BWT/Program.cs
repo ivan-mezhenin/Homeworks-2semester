@@ -1,6 +1,6 @@
 ﻿using BWT;
 
-if (!Tests.TestsComplete())
+if (!Test.TestsComplete())
 {
     return;
 }
@@ -11,14 +11,14 @@ switch (args[0])
     {
     case "1":
         {
-            var answer = WordTransform.Transform(args[1]);
-            Console.WriteLine($"{answer.transformWord}: {answer.position}");
+            var answer = BWt.Transform(args[1]);
+            Console.WriteLine($"{answer.TransformWord}: {answer.Position}");
             break;
         }
 
     case "2":
         {
-            var answer = WordTransform.ReverseTransform(args[1], Convert.ToInt32(args[2]));
+            var answer = BWt.ReverseTransform(args[1], Convert.ToInt32(args[2]));
             Console.WriteLine($"{answer}");
             break;
         }

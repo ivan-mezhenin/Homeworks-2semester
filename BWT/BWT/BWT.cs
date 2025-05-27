@@ -3,16 +3,16 @@ namespace BWT;
 /// <summary>
 /// BWT realization.
 /// </summary>
-public static class WordTransform
+public static class BWt
 {
     /// <summary>
     /// word transform.
     /// </summary>
     /// <param name="word">word, which will be transformed.</param>
     /// <returns>transformed word and position.</returns>
-    public static (string transformWord, int position) Transform(string word)
+    public static (string TransformWord, int Position) Transform(string word)
     {
-        string[] shifts = new string[word.Length];
+        var shifts = new string[word.Length];
         var currentString = word;
 
         for (var i = 0; i < word.Length; ++i)
@@ -37,16 +37,16 @@ public static class WordTransform
     /// <returns>original word.</returns>
     public static string ReverseTransform(string word, int position)
     {
-        int wordLength = word.Length;
-        Dictionary<char, int> charsCounter = new ();
-        Dictionary<char, int> startPositions = new ();
-        int[] next = new int[wordLength];
-        int summary = 0;
+        var wordLength = word.Length;
+        Dictionary<char, int> charsCounter = new();
+        Dictionary<char, int> startPositions = new();
+        var next = new int[wordLength];
+        var summary = 0;
 
         position--;
 
-        foreach (char symbol in word)
-         {
+        foreach (var symbol in word)
+        {
             if (!charsCounter.TryGetValue(symbol, out int value))
             {
                 value = 0;
@@ -55,12 +55,12 @@ public static class WordTransform
 
             value++;
             charsCounter[symbol] = value;
-         }
+        }
 
         var sortedChars = charsCounter.Keys.ToArray();
         Array.Sort(sortedChars);
 
-        foreach (char symbol in sortedChars)
+        foreach (var symbol in sortedChars)
         {
             startPositions[symbol] = summary;
             summary += charsCounter[symbol];
@@ -73,8 +73,8 @@ public static class WordTransform
             startPositions[currentSymbol]++;
         }
 
-        char[] originalWord = new char[wordLength];
-        int current = position;
+        var originalWord = new char[wordLength];
+        var current = position;
         for (var i = 0; i < wordLength; ++i)
         {
             originalWord[i] = word[next[current]];
