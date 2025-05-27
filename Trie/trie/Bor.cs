@@ -1,3 +1,7 @@
+// <copyright file="Bor.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 namespace Trie;
 
 /// <summary>
@@ -5,12 +9,12 @@ namespace Trie;
 /// </summary>
 public class Bor
 {
-    private readonly TrieNode root = new ();
+    private readonly TrieNode root = new();
 
     /// <summary>
-    /// Gets amount of added words in Trie.
+    /// Gets or sets amount of added words in Trie.
     /// </summary>
-    public int Size { get; private set; }
+    private int Size { get; set; }
 
     /// <summary>
     /// add new word in Trie.
@@ -26,7 +30,7 @@ public class Bor
 
         var currentNode = this.root;
 
-        foreach (char symbol in element)
+        foreach (var symbol in element)
         {
             if (!currentNode.Children.TryGetValue(symbol, out var value))
             {
@@ -63,7 +67,7 @@ public class Bor
 
         var currentNode = this.root;
 
-        foreach (char symbol in element)
+        foreach (var symbol in element)
         {
             if (!currentNode.Children.TryGetValue(symbol, out var value))
             {
@@ -89,7 +93,7 @@ public class Bor
         }
 
         var currentNode = this.root;
-        Stack<(TrieNode, char)> wayToElement = new ();
+        Stack<(TrieNode, char)> wayToElement = new();
 
         foreach (var symbol in element)
         {
@@ -155,7 +159,7 @@ public class Bor
 
     private class TrieNode
     {
-        public Dictionary<char, TrieNode> Children { get; set; } = new ();
+        public Dictionary<char, TrieNode> Children { get; set; } = new();
 
         public bool IsTerminal { get; set; }
 
