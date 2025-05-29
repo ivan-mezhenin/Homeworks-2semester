@@ -1,4 +1,8 @@
-﻿using LZW;
+﻿// <copyright file="Program.cs" company="ivan-mezhenin">
+// Copyright (c) ivan-mezhenin. All rights reserved.
+// </copyright>
+
+using LZW;
 
 Console.WriteLine("LZW. Write FilePath -c/-u. -c - if you want to compress file, -u - to decompress");
 

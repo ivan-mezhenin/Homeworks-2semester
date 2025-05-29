@@ -1,3 +1,7 @@
+// <copyright file="LZWDecode.cs" company="ivan-mezhenin">
+// Copyright (c) ivan-mezhenin. All rights reserved.
+// </copyright>
+
 namespace LZW;
 
 /// <summary>
@@ -11,11 +15,11 @@ public class LZWDecode
     /// <param name="filePath">file to decompress.</param>
     public static void Decompress(string filePath)
     {
-        byte[] data = File.ReadAllBytes(filePath);
-        int[] codes = TransformByteSequenceToIntArray(data);
-        byte[] decompressedData = Decode(codes);
+        var data = File.ReadAllBytes(filePath);
+        var codes = TransformByteSequenceToIntArray(data);
+        var decompressedData = Decode(codes);
 
-        string decompressedFilePath = filePath[..^7];
+        var decompressedFilePath = filePath[..^7];
         File.WriteAllBytes(decompressedFilePath, decompressedData);
     }
 
@@ -23,24 +27,24 @@ public class LZWDecode
     /// to decode data.
     /// </summary>
     /// <param name="encodedData">data to encode.</param>
-    /// <returns>sourseByteSequence.</returns>
-    public static byte[] Decode(int[] encodedData)
+    /// <returns>source byte sequence.</returns>
+    private static byte[] Decode(int[] encodedData)
     {
         Dictionary<int, List<byte>> codes = new();
-        List<byte> output = new();
-        int counter = 256;
+        List<byte> output = [];
+        var counter = 256;
 
-        for (int i = 0; i < 256; i++)
+        for (var i = 0; i < 256; i++)
         {
             codes[i] = [(byte)i];
         }
 
-        int prevCode = encodedData[0];
+        var prevCode = encodedData[0];
         output.AddRange(codes[prevCode]);
 
-        for (int i = 1; i < encodedData.Length; i++)
+        for (var i = 1; i < encodedData.Length; i++)
         {
-            int currentCode = encodedData[i];
+            var currentCode = encodedData[i];
             List<byte> currentSequence = new();
 
             if (currentCode == counter)
@@ -69,11 +73,11 @@ public class LZWDecode
     /// </summary>
     /// <param name="byteSequence">byte sequence to transform.</param>
     /// <returns>int array of codes.</returns>
-    public static int[] TransformByteSequenceToIntArray(byte[] byteSequence)
+    private static int[] TransformByteSequenceToIntArray(byte[] byteSequence)
     {
-        List<int> result = new();
-        int number = 0;
-        int shift = 0;
+        List<int> result = [];
+        var number = 0;
+        var shift = 0;
 
         foreach (var symbol in byteSequence)
         {

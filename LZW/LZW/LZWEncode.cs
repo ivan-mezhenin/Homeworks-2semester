@@ -1,3 +1,7 @@
+// <copyright file="LZWEncode.cs" company="ivan-mezhenin">
+// Copyright (c) ivan-mezhenin. All rights reserved.
+// </copyright>
+
 namespace LZW;
 
 /// <summary>
@@ -22,7 +26,7 @@ public class LZWEncode
         string compressedFilePath = filePath + ".zipped";
         File.WriteAllBytes(compressedFilePath, compressedData);
 
-        float compressionRatio = (float)compressedFileLength / fileLength;
+        var compressionRatio = (float)compressedFileLength / fileLength;
         Console.WriteLine($"The compression ratio is {compressionRatio}");
     }
 
@@ -31,17 +35,17 @@ public class LZWEncode
     /// </summary>
     /// <param name="data">file to encode.</param>
     /// <returns>int array of codes.</returns>
-    public static int[] Encode(byte[] data)
+    private static int[] Encode(byte[] data)
     {
-        Trie trie = Trie.Initialization();
-        int counter = trie.Size;
+        var trie = Trie.Initialization();
+        var counter = trie.Size;
 
         List<byte> currentByteSequence = [data[0]];
         List<int> encodedString = [];
 
         for (var i = 1; i < data.Length; ++i)
         {
-            byte nextByte = data[i];
+            var nextByte = data[i];
             List<byte> combined = [.. currentByteSequence, nextByte];
 
             if (trie.Contains(combined) != -1)
@@ -69,7 +73,7 @@ public class LZWEncode
     /// </summary>
     /// <param name="encodedString">string to transform.</param>
     /// <returns>byte array.</returns>
-    public static byte[] TransformIntArrayToByteSequence(int[] encodedString)
+    private static byte[] TransformIntArrayToByteSequence(int[] encodedString)
     {
         List<byte> result = [];
 
@@ -78,7 +82,7 @@ public class LZWEncode
             long value = symbol;
             while (value != 0)
             {
-                byte byteValue = (byte)(value & 127);
+                var byteValue = (byte)(value & 127);
                 value >>= 7;
                 if (value != 0)
                 {
