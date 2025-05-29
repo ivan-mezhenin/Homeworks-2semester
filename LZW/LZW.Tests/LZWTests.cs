@@ -31,16 +31,7 @@ public class Tests
 
         Assert.That(codes, Is.EqualTo(expectedResult));
     }
-
-    [Test]
-    public void LZWEncode_Encode_()
-    {
-        int[] sequence = { 97, 98 };
-        byte[] expected = { 48, 152, 128 };
-
-        Assert.That(LZW.LZWEncode.Encode(sequence), Is.EqualTo(expected));
-    }
-
+   
     [Test]
     public void LZW_DataAfterCompressAndDecompress_ShouldEqual()   
     {

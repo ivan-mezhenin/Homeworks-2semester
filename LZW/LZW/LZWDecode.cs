@@ -1,6 +1,6 @@
 // <copyright file="LZWDecode.cs" company="ivan-mezhenin">
 // Copyright (c) ivan-mezhenin. All rights reserved.
-// </copyright>
+// </copyright> 
 
 namespace LZW;
 
@@ -28,7 +28,7 @@ public class LZWDecode
     /// </summary>
     /// <param name="encodedData">data to encode.</param>
     /// <returns>source byte sequence.</returns>
-    private static byte[] Decode(int[] encodedData)
+    public static byte[] Decode(int[] encodedData)
     {
         Dictionary<int, List<byte>> codes = new();
         List<byte> output = [];
@@ -73,7 +73,7 @@ public class LZWDecode
     /// </summary>
     /// <param name="byteSequence">byte sequence to transform.</param>
     /// <returns>int array of codes.</returns>
-    private static int[] TransformByteSequenceToIntArray(byte[] byteSequence)
+    public static int[] TransformByteSequenceToIntArray(byte[] byteSequence)
     {
         List<int> result = [];
         var number = 0;

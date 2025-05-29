@@ -35,7 +35,7 @@ public class LZWEncode
     /// </summary>
     /// <param name="data">file to encode.</param>
     /// <returns>int array of codes.</returns>
-    private static int[] Encode(byte[] data)
+    public static int[] Encode(byte[] data)
     {
         var trie = Trie.Initialization();
         var counter = trie.Size;
@@ -73,7 +73,7 @@ public class LZWEncode
     /// </summary>
     /// <param name="encodedString">string to transform.</param>
     /// <returns>byte array.</returns>
-    private static byte[] TransformIntArrayToByteSequence(int[] encodedString)
+    public static byte[] TransformIntArrayToByteSequence(int[] encodedString)
     {
         List<byte> result = [];
 
