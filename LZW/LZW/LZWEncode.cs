@@ -1,5 +1,5 @@
-// <copyright file="LZWEncode.cs" company="ivan-mezhenin">
-// Copyright (c) ivan-mezhenin. All rights reserved.
+// <copyright file="LZWEncode.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
 namespace LZW;
