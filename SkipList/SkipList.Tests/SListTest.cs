@@ -38,6 +38,22 @@ public class SListTest
     }
 
     /// <summary>
+    /// test correct adding one thousand elements.
+    /// </summary>
+    [Test]
+    public void SList_Add_OneThousandElements()
+    {
+        var testedList = new SList<int>();
+
+        for (var i = 1; i <= 1000; ++i)
+        {
+            testedList.Add(i);
+        }
+
+        Assert.That(testedList.Contains(500), Is.True);
+    }
+
+    /// <summary>
     /// adding null item should throw argument null exception.
     /// </summary>
     [Test]
