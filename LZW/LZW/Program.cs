@@ -4,13 +4,14 @@
 
 using LZW;
 
-Console.WriteLine("LZW. Write FilePath -c/-u. -c - if you want to compress file, -u - to decompress");
+Console.WriteLine("LZW. Write dotnet run -- FilePath -c/-u. -c - if you want to compress file, -u - to decompress");
 
 switch (args[1])
 {
     case "-c":
     {
-        LZW.LZWEncode.Compress(args[0]);
+        var compressionRatio = LZW.LZWEncode.Compress(args[0]);
+        Console.WriteLine("Compression ratio: " + compressionRatio);
         break;
     }
 

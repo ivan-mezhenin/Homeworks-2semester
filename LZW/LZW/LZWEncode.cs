@@ -13,7 +13,8 @@ public class LZWEncode
     /// to compress file.
     /// </summary>
     /// <param name="filePath">file to compress.</param>
-    public static void Compress(string filePath)
+    /// <returns>compression ratio.</returns>
+    public static float Compress(string filePath)
     {
         var data = File.ReadAllBytes(filePath);
         var fileLength = data.Length;
@@ -26,8 +27,7 @@ public class LZWEncode
         var compressedFilePath = filePath + ".zipped";
         File.WriteAllBytes(compressedFilePath, compressedData);
 
-        var compressionRatio = (float)fileLength / compressedFileLength;
-        Console.WriteLine($"The compression ratio is {compressionRatio}");
+        return (float)fileLength / compressedFileLength;
     }
 
     /// <summary>
