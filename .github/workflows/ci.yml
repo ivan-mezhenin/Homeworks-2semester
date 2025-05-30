@@ -1,50 +1,45 @@
-name: Build
-
+ame: Build and Test
 on: [push, pull_request]
 
 jobs:
-  build-Ubuntu:
+  build-ubuntu:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '9.0.x' 
-      
-      - name: Build
-        run: |
-          for f in $(find . -name "*.sln"); do
-            dotnet build $f --configuration Release
-          done
-      
-      - name: Run tests
-        run: |
-          for f in $(find . -name "*.sln"); do
-            dotnet test $f --no-build --configuration Release
-          done
+    - uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.x'
+        
+    - name: Build
+      run: |
+        for f in $(find . -name "*.sln"); do
+          if [[ "$f" != *"CalculatorOnForms2"* ]]; then
+            dotnet build "$f"
+          fi
+        done
 
-  build-Windows:
+    - name: Run tests
+      run: |
+        for f in $(find . -name "*.sln"); do
+          if [[ "$f" != *"CalculatorOnForms2"* ]]; then
+            dotnet test "$f"
+          fi
+        done
+
+  build-windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '9.0.x'
-      
-      - name: Build
-        shell: cmd
-        run: |
-          For /R %%I in (*.sln) do (
-            dotnet build %%I --configuration Release
-          )
-      
-      - name: Run tests
-        shell: cmd
-        run: |
-          For /R %%I in (*.sln) do (
-            dotnet test %%I --no-build --configuration Release
-          )
+    - uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.x'
+
+    - name: Build and Test
+      shell: pwsh
+      run: |
+        Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+          dotnet build $_.FullName
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet test $_.FullName --no-build
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        }
