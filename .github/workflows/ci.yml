@@ -11,12 +11,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
-      - name: Проверить stylecop.json
-  	run: |
-    	ls -la stylecop.json
-    	file stylecop.json
-    	cat stylecop.json    
+          dotnet-version: '9.0.x' 
       
       - name: Build
         run: |
