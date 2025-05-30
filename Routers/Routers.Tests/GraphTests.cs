@@ -2,9 +2,9 @@
 // Copyright (c) ivan-mezhenin. All rights reserved.
 // </copyright>
 
-using Routers;
-
 namespace Routers.Tests;
+
+using Routers;
 
 /// <summary>
 /// Tests for Graph.
