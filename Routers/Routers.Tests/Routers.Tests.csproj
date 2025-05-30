@@ -28,10 +28,6 @@
       <ProjectReference Include="..\Routers\Routers.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <AdditionalFiles Include="stylecop.json" Link="stylecop.json" />
-    </ItemGroup>
-
     <PropertyGroup>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
