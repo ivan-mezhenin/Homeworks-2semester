@@ -32,6 +32,10 @@
         <AdditionalFiles Include="stylecop.json" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
       <None Remove="TestFiles\TestNotConnectedGraph.txt" />
       <Content Include="TestFiles\TestNotConnectedGraph.txt">
