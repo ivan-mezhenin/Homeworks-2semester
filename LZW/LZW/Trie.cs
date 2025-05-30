@@ -1,3 +1,7 @@
+// <copyright file="Trie.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 namespace LZW;
 
 /// <summary>
@@ -73,7 +77,7 @@ public class Trie
     /// <returns>-1 if trie doesn't contains element, element's code if element in trie.</returns>
     public int Contains(List<byte> element)
     {
-        int trieDoesNotContainsElement = -1;
+        const int trieDoesNotContainsElement = -1;
 
         if (element.Count == 0)
         {
