@@ -1,5 +1,5 @@
-// <copyright file="GraphIsNotConnectedException.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+// <copyright file="GraphIsNotConnectedException.cs" company="ivan-mezhenin">
+// Copyright (c) ivan-mezhenin. All rights reserved.
 // </copyright>
 
 namespace Routers;
