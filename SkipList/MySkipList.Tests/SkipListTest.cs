@@ -1,13 +1,13 @@
-﻿// <copyright file="SListTest.cs" company="ivan-mezhenin">
+﻿// <copyright file="SkipListTest.cs" company="ivan-mezhenin">
 // Copyright (c) ivan-mezhenin. All rights reserved.
 // </copyright>
 
-namespace SkipList.Tests;
+namespace MySkipList.Tests;
 
 /// <summary>
 /// tests for skip list.
 /// </summary>
-public class SListTest
+public class SkipListTest
 {
     /// <summary>
     /// test correct initialization skip list with elements.
@@ -15,7 +15,7 @@ public class SListTest
     [Test]
     public void SList_Initialization_WithElements()
     {
-        var testedList = new SList<char>(['a', 'b', 'c']);
+        var testedList = new SkipList<char>(['a', 'b', 'c']);
         char[] expected = ['a', 'b', 'c'];
 
         Assert.That((char[])[testedList[0], testedList[1], testedList[2]], Is.EqualTo(expected));
@@ -27,7 +27,7 @@ public class SListTest
     [Test]
     public void SList_Add_NewElements()
     {
-        var testedList = new SList<int>();
+        var testedList = new SkipList<int>();
         int[] expected = [1, 2, 3];
 
         testedList.Add(1);
@@ -43,7 +43,7 @@ public class SListTest
     [Test]
     public void SList_Add_OneThousandElements()
     {
-        var testedList = new SList<int>();
+        var testedList = new SkipList<int>();
 
         for (var i = 1; i <= 1000; ++i)
         {
@@ -58,7 +58,7 @@ public class SListTest
     /// </summary>
     [Test]
     public void SList_Add_NullItem_ShouldThrowArgumentNullException()
-        => Assert.Throws<ArgumentNullException>(() => new SList<string>().Add(null!));
+        => Assert.Throws<ArgumentNullException>(() => new SkipList<string>().Add(null!));
 
     /// <summary>
     /// test Count after adding new elements in list.
@@ -66,7 +66,7 @@ public class SListTest
     [Test]
     public void SList_Count_CorrectAmountAfterAddingNewElements()
     {
-        var testedList = new SList<string>();
+        var testedList = new SkipList<string>();
         const int expected = 4;
 
         testedList.Add("aaada");
@@ -83,7 +83,7 @@ public class SListTest
     [Test]
     public void List_GetEnumerator_ReturnsAllElements()
     {
-        var testedList = new SList<char>((char[])['a', 'b', 'c']);
+        var testedList = new SkipList<char>((char[])['a', 'b', 'c']);
         var result = new List<int>();
 
         foreach (var item in testedList)
@@ -100,7 +100,7 @@ public class SListTest
     [Test]
     public void SList_GetEnumerator_ModifiedCollection_ThrowsInvalidOperationException()
     {
-        var testedList = new SList<int>((int[])[1, 2, 3, 4]);
+        var testedList = new SkipList<int>((int[])[1, 2, 3, 4]);
         var enumerator = testedList.GetEnumerator();
 
         enumerator.MoveNext();
@@ -117,7 +117,7 @@ public class SListTest
     [Test]
     public void SList_Clear_ShouldResetCountToZero()
     {
-        var testedList = new SList<int>([1, 2, 3]);
+        var testedList = new SkipList<int>([1, 2, 3]);
         Assert.That(testedList.Count, Is.EqualTo(3));
 
         testedList.Clear();
@@ -131,7 +131,7 @@ public class SListTest
     [Test]
     public void SList_Clear_ShouldMakeCollectionEmpty()
     {
-        var list = new SList<string>(["a", "b", "c"]);
+        var list = new SkipList<string>(["a", "b", "c"]);
 
         list.Clear();
 
@@ -151,7 +151,7 @@ public class SListTest
     [Test]
     public void SList_Contains_ShouldReturnTrue()
     {
-        var testedList = new SList<int> { 1 };
+        var testedList = new SkipList<int> { 1 };
 
         Assert.That(testedList.Contains(1), Is.True);
     }
@@ -162,7 +162,7 @@ public class SListTest
     [Test]
     public void SList_CopyTo_ValidParameters_CopiesElementsCorrectly()
     {
-        var list = new SList<int>([1, 2, 3]);
+        var list = new SkipList<int>([1, 2, 3]);
         var array = new int[3];
 
         list.CopyTo(array, 0);
@@ -176,7 +176,7 @@ public class SListTest
     [Test]
     public void SList_CopyTo_InsufficientSpace_ThrowsArgumentOutOfRangeException()
     {
-        var list = new SList<int>([1, 2, 3]);
+        var list = new SkipList<int>([1, 2, 3]);
         var smallArray = new int[2];
 
         Assert.Throws<ArgumentOutOfRangeException>(() => list.CopyTo(smallArray, 0));
@@ -188,7 +188,7 @@ public class SListTest
     [Test]
     public void SList_Remove_ExistingItem_ReturnsTrueAndRemovesItem()
     {
-        var testedList = new SList<string>(["apple", "banana"]);
+        var testedList = new SkipList<string>(["apple", "banana"]);
 
         var result = testedList.Remove("apple");
 
@@ -206,7 +206,7 @@ public class SListTest
     [Test]
     public void SList_Remove_NonExistingItem_ReturnsFalse()
     {
-        var list = new SList<int>([1, 2, 3]);
+        var list = new SkipList<int>([1, 2, 3]);
         var result = list.Remove(4);
         const int expected = 3;
 
@@ -220,7 +220,7 @@ public class SListTest
     [Test]
     public void SList_IndexOf_ExistingItem_ReturnsCorrectIndex()
     {
-        var testedList = new SList<string>(["apple", "banana", "chocolate"]);
+        var testedList = new SkipList<string>(["apple", "banana", "chocolate"]);
         var result = testedList.IndexOf("chocolate");
         const int expected = 2;
 
@@ -233,7 +233,7 @@ public class SListTest
     [Test]
     public void SList_IndexOf_NonExistingItem_ReturnsCorrectIndex()
     {
-        var testedList = new SList<string>(["apple", "banana", "chocolate"]);
+        var testedList = new SkipList<string>(["apple", "banana", "chocolate"]);
         var result = testedList.IndexOf("ivan");
         const int expected = -1;
 
@@ -245,5 +245,5 @@ public class SListTest
     /// </summary>
     [Test]
     public void SList_Insert_ThrowsNotSupportedException()
-        => Assert.Throws<NotSupportedException>(() => new SList<int>().Insert(0, 1));
+        => Assert.Throws<NotSupportedException>(() => new SkipList<int>().Insert(0, 1));
 }

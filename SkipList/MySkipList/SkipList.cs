@@ -1,8 +1,8 @@
-// <copyright file="SList.cs" company="ivan-mezhenin">
+// <copyright file="SkipList.cs" company="ivan-mezhenin">
 // Copyright (c) ivan-mezhenin. All rights reserved.
 // </copyright>
 
-namespace SkipList;
+namespace MySkipList;
 
 using System.Collections;
 
@@ -10,7 +10,7 @@ using System.Collections;
 /// skip list.
 /// </summary>
 /// <typeparam name="T">type of list's elements.</typeparam>
-public class SList<T> : IList<T>
+public class SkipList<T> : IList<T>
     where T : IComparable<T>
 {
     private const int MaxLevel = 32;
@@ -21,9 +21,9 @@ public class SList<T> : IList<T>
     private int version;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SList{T}"/> class.
+    /// Initializes a new instance of the <see cref="SkipList{T}"/> class.
     /// </summary>
-    public SList()
+    public SkipList()
     {
         this.bottomHead = new SkipListElement(default, this.nil, this.nil);
         var current = this.bottomHead;
@@ -37,10 +37,10 @@ public class SList<T> : IList<T>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SList{T}"/> class.
+    /// Initializes a new instance of the <see cref="SkipList{T}"/> class.
     /// </summary>
     /// <param name="collection">collection to initialization.</param>
-    public SList(IEnumerable<T> collection)
+    public SkipList(IEnumerable<T> collection)
     : this()
     {
         foreach (var item in collection)

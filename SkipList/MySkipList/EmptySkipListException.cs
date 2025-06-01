@@ -2,7 +2,7 @@
 // Copyright (c) ivan-mezhenin. All rights reserved.
 // </copyright>
 
-namespace SkipList;
+namespace MySkipList;
 
 /// <summary>
 /// empty skip list exception.

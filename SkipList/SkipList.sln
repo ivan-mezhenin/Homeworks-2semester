@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkipList", "SkipList\SkipList.csproj", "{DFE75538-72CD-4056-814F-0A6364DA5714}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySkipList", "MySkipList\MySkipList.csproj", "{DFE75538-72CD-4056-814F-0A6364DA5714}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkipList.Tests", "SkipList.Tests\SkipList.Tests.csproj", "{C2ADF7D6-85BF-4A16-8869-E4937D6A7C12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySkipList.Tests", "MySkipList.Tests\MySkipList.Tests.csproj", "{C2ADF7D6-85BF-4A16-8869-E4937D6A7C12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
