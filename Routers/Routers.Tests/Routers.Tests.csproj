@@ -33,6 +33,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <AdditionalFiles Include="stylecop.json" />
+    </ItemGroup>
+
+    <ItemGroup>
       <None Remove="TestFiles\TestNotConnectedGraph.txt" />
       <Content Include="TestFiles\TestNotConnectedGraph.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
