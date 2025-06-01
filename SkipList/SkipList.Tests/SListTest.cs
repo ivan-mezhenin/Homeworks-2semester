@@ -1,5 +1,5 @@
-﻿// <copyright file="SListTest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="SListTest.cs" company="ivan-mezhenin">
+// Copyright (c) ivan-mezhenin. All rights reserved.
 // </copyright>
 
 namespace SkipList.Tests;
