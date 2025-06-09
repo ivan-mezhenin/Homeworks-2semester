@@ -15,10 +15,7 @@ public class LinqTests
     /// test method GetPrimes by taking first 5 numbers.
     /// </summary>
     [Test]
-    public void Linq_GetPrimes_FirstFiveNumbers()
-    {
-        Assert.That(Linq.GetPrimes().Take(5), Is.EquivalentTo((int[])[2, 3, 5, 7, 11]));
-    }
+    public void Linq_GetPrimes_FirstFiveNumbers() => Assert.That(Linq.GetPrimes().Take(5), Is.EquivalentTo((int[])[2, 3, 5, 7, 11]));
 
     /// <summary>
     /// test method Take by taking first 4 elements of char array.
