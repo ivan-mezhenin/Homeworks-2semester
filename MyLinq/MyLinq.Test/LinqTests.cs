@@ -44,4 +44,18 @@ public class LinqTests
         var primeNumbers = Linq.GetPrimes();
         Assert.That(primeNumbers.Skip(3).Take(5), Is.EquivalentTo((int[])[7, 11, 13, 17, 19]));
     }
+
+    /// <summary>
+    /// test skip with negative index should return empty sequence.
+    /// </summary>
+    [Test]
+    public void Linq_Skip_NegativeIndex()
+        => Assert.That(Linq.GetPrimes().Skip(-5), Is.Empty);
+
+    /// <summary>
+    /// test take with negative index should return empty sequence.
+    /// </summary>
+    [Test]
+    public void Linq_Take_NegativeIndex()
+        => Assert.That(Linq.GetPrimes().Take(-10), Is.Empty);
 }

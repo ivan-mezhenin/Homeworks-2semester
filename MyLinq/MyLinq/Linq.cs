@@ -69,6 +69,11 @@ public static class Linq
     /// <returns>sequence.</returns>
     public static IEnumerable<T> Skip<T>(this IEnumerable<T> seq, int n)
     {
+        if (n < 0)
+        {
+            yield break;
+        }
+
         var count = 0;
 
         foreach (var item in seq)
