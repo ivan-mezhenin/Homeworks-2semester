@@ -13,9 +13,9 @@ public static class Linq
     /// Generates an infinite sequence of prime numbers.
     /// </summary>
     /// <returns>sequence.</returns>
-    public static IEnumerable<int> GetPrimes()
+    public static IEnumerable<long> GetPrimes()
     {
-        var number = 2;
+        long number = 2;
 
         while (true)
         {
@@ -24,7 +24,10 @@ public static class Linq
                 yield return number;
             }
 
-            ++number;
+            checked
+            {
+                ++number;
+            }
         }
     }
 
@@ -79,7 +82,7 @@ public static class Linq
         }
     }
 
-    private static bool IsPrime(int number)
+    private static bool IsPrime(long number)
     {
         if (number <= 1)
         {

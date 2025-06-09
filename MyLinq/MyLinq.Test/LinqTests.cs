@@ -4,8 +4,6 @@
 
 namespace MyLinq.Test;
 
-using MyLinq;
-
 /// <summary>
 /// test for linq.
 /// </summary>
