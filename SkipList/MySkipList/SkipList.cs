@@ -115,10 +115,7 @@ public class SkipList<T> : IList<T>
     /// <inheritdoc/>
     public void Add(T item)
     {
-        if (item == null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
+        ArgumentNullException.ThrowIfNull(item);
 
         var newLevel = this.GetRandomLevel();
         var current = this.head;
