@@ -108,9 +108,7 @@ public class SkipList<T> : IList<T>
 
     /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator()
-    {
-        return this.GetEnumerator();
-    }
+        => this.GetEnumerator();
 
     /// <inheritdoc/>
     public void Add(T item)
