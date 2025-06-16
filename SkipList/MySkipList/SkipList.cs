@@ -14,7 +14,7 @@ public class SkipList<T> : IList<T>
     where T : IComparable<T>
 {
     private const int MaxLevel = 32;
-    private readonly Random isLevelUp = new Random();
+    private readonly Random isLevelUp = new();
     private readonly SkipListElement nil = new(default, null, null);
     private SkipListElement head;
     private SkipListElement bottomHead;
