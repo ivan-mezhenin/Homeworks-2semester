@@ -37,7 +37,7 @@ public class LZWEncode
     /// <returns>int array of codes.</returns>
     public static int[] Encode(byte[] data)
     {
-        var trie = Trie.Init();
+        var trie = Trie.Initialization();
         var counter = trie.Size;
 
         List<byte> currentByteSequence = [data[0]];

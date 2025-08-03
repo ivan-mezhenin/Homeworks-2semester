@@ -6,12 +6,6 @@ using LZW;
 
 Console.WriteLine("LZW. Write dotnet run -- FilePath -c/-u. -c - if you want to compress file, -u - to decompress");
 
-if (string.IsNullOrEmpty(args[0]) || string.IsNullOrEmpty(args[1]) || args.Length < 2)
-{
-    Console.WriteLine("Error when passing arguments");
-    return;
-}
-
 switch (args[1])
 {
     case "-c":
