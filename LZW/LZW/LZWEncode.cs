@@ -25,7 +25,6 @@ public class LZWEncode
         var compressedFileLength = compressedData.Length;
 
         var compressedFilePath = filePath + ".zipped";
-        Console.WriteLine($"Writing compressed file to {compressedFilePath}");
         File.WriteAllBytes(compressedFilePath, compressedData);
 
         return (float)fileLength / compressedFileLength;
@@ -38,7 +37,7 @@ public class LZWEncode
     /// <returns>int array of codes.</returns>
     public static int[] Encode(byte[] data)
     {
-        var trie = Trie.Initialization();
+        var trie = Trie.Init();
         var counter = trie.Size;
 
         List<byte> currentByteSequence = [data[0]];

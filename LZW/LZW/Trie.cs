@@ -20,7 +20,7 @@ public class Trie
     /// filling trie of bytes.
     /// </summary>
     /// <returns>trie.</returns>
-    public static Trie Initialization()
+    public static Trie Init()
     {
         Trie newTrie = new();
 
